@@ -1,0 +1,5 @@
+{
+  "messages": {
+    "invalidExtension": "The file {file} was not registered as a command because it is outside the established extension standards. Only TypeScript and JavaScript format files are allowed. "
+  }
+}

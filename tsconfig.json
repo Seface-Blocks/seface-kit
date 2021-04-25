@@ -16,11 +16,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@classes/*": ["src/classes/*"]
-    }
+    "baseUrl": "."
   },
 
   "include": [ "./src" ],
