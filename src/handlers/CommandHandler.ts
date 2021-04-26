@@ -7,7 +7,7 @@ import SefaceKit from '..';
 import Utils from '../utils/Utils';
 import { messages } from '../config.json';
 import { Command } from '../interfaces/Command';
-import chalk from 'chalk';
+import { HandlerType } from '../utils/enums/HandlerTypes';
 
 export class CommandHandler {
   private instance: SefaceKit;
@@ -35,7 +35,9 @@ export class CommandHandler {
       // Checks if the file has a valid extension.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) {
         if (this.instance.options.showWarns) {
-          console.warn(`${Chalk.bold.yellow('WARNING')} ${messages.invalidExtension.replace('{file}', chalk.magenta(fileOrDir))}`);
+          console.warn(`${Chalk.bold.yellow('WARNING')} ${messages.invalidExtension
+            .replace('{file}', Chalk.magenta(fileOrDir))}`
+            .replace('{handlerType}', Chalk.magenta(HandlerType[this.constructor.name])));
         }
 
         return;
@@ -45,4 +47,4 @@ export class CommandHandler {
       this._commandsCollection.set(command.name, command);
     });
   }
-};
+}
