@@ -31,4 +31,6 @@ export default class SefaceKit {
 
   /** Return all options of SefaceKit. */
   public get options() { return this._options; }
+
+  public get registeredCommands() { return this._commandsCollection; }
 }

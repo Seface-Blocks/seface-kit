@@ -22,15 +22,15 @@ export class CommandHandler {
 
   /** Initialize the Command Handler. */
   private init(directory: string) {
-    const cmdDir = path.join(require.main.path, directory);
+    const commandsDir = path.join(require.main.path, directory);
 
-    fs.readdirSync(cmdDir).forEach((fileOrDir) => {
-      const insideCmdDir = path.join(require.main.path, directory, fileOrDir);
-      const cmdSubdir = path.join(directory, fileOrDir);
-      const dirStat = fs.lstatSync(insideCmdDir);
+    fs.readdirSync(commandsDir).forEach((fileOrDir) => {
+      const inCommandsDir = path.join(require.main.path, directory, fileOrDir);
+      const commandsSubdir = path.join(directory, fileOrDir);
+      const dirStat = fs.lstatSync(inCommandsDir);
 
       // Loop the function to call everytime when the readdirSync enter in another folder.
-      if (dirStat.isDirectory()) { return this.init(cmdSubdir); }
+      if (dirStat.isDirectory()) { return this.init(commandsSubdir); }
 
       // Checks if the file has a valid extension.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) {
@@ -43,7 +43,7 @@ export class CommandHandler {
         return;
       }
 
-      const { command } = require(insideCmdDir);
+      const { command } = require(inCommandsDir);
       this._commandsCollection.set(command.name, command);
     });
   }
