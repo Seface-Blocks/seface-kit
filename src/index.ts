@@ -1,17 +1,18 @@
 import { Client, Collection } from 'discord.js';
 
-import { Event } from './interfaces/Event';
-import { Command } from './interfaces/Command';
+import { Event } from './utils/interfaces/Event';
+import { Command } from './utils/interfaces/Command';
 import { moduleEventDir } from './config.json';
 import { EventHandler } from './handlers/EventHandler';
 import { CommandHandler } from './handlers/CommandHandler';
-import { SefaceKitOptions } from './interfaces/SefaceKitOptions';
+import { SefaceKitOptions } from './utils/interfaces/SefaceKitOptions';
 import { ModuleEventHandler } from './handlers/ModuleEventHandler';
 
 export default class SefaceKit {
   private _client: Client;
   private _options: SefaceKitOptions;
   private _commandsCollection: Collection<string, Command>;
+  private _commandsAliasesCollection: Collection<string, Command>;
   private _eventsCollection: Collection<string, Event>;
 
   /** TODO: jsdoc */
@@ -19,9 +20,10 @@ export default class SefaceKit {
     this._client = client;
     this._options = options;
     this._commandsCollection = new Collection();
+    this._commandsAliasesCollection = new Collection();
     this._eventsCollection = new Collection();
 
-    new CommandHandler(options.commandsIn, this._commandsCollection, this);
+    new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection, this);
     new EventHandler(options.eventsIn, this._eventsCollection, this);
     new ModuleEventHandler(moduleEventDir, this._eventsCollection, this);
   }
@@ -32,5 +34,12 @@ export default class SefaceKit {
   /** Return all options of SefaceKit. */
   public get options() { return this._options; }
 
+  /** Return all registered commands. */
   public get registeredCommands() { return this._commandsCollection; }
+
+  /** Return all registered command aliases. */
+  public get registeredCommandAliases() { return this._commandsAliasesCollection; }
+
+  /** Return all registered events. */
+  public get registeredEvents() { return this._eventsCollection; }
 }

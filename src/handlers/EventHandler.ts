@@ -5,10 +5,11 @@ import { Collection } from 'discord.js';
 
 import SefaceKit from '..';
 import Utils from '../utils/Utils';
-import { Event } from '../interfaces/Event';
+import { Event } from '../utils/interfaces/Event';
 import { messages } from '../config.json';
 import { HandlerType } from '../utils/enums/HandlerTypes';
 
+/** An EventHandler to read and register all events in the project. */
 export class EventHandler {
   private instance: SefaceKit;
   private _eventsCollection: Collection<string, Event>;
@@ -43,7 +44,7 @@ export class EventHandler {
         return;
       }
 
-      const { event }: any = await import(inEventsDir);
+      const { event }: { event: Event; } = await import(inEventsDir);
 
       this._eventsCollection.set(event.name, event);
       this.instance.client.on(event.name, event.run.bind(null, this.instance.client, this.instance));

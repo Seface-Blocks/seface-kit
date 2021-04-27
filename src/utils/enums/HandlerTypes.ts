@@ -1,4 +1,5 @@
 export enum HandlerType {
   CommandHandler = 'Command',
-  EventHandler = 'Event'
+  EventHandler = 'Event',
+  ModuleEventHandler = 'Module Event'
 }

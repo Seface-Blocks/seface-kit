@@ -6,16 +6,20 @@ import { Collection } from 'discord.js';
 import SefaceKit from '..';
 import Utils from '../utils/Utils';
 import { messages } from '../config.json';
-import { Command } from '../interfaces/Command';
+import { Command } from '../utils/interfaces/Command';
 import { HandlerType } from '../utils/enums/HandlerTypes';
 
 export class CommandHandler {
   private instance: SefaceKit;
   private _commandsCollection: Collection<string, Command>;
+  private _commandsAliasesCollection: Collection<string, Command>;
 
-  constructor(directory: string, collection: Collection<string, Command>, instance: SefaceKit) {
+  constructor(directory: string, commandsCollection: Collection<string, Command>,
+    commandsAliasesCollection: Collection<string, Command>, instance: SefaceKit) {
+
     this.instance = instance;
-    this._commandsCollection = collection;
+    this._commandsCollection = commandsCollection;
+    this._commandsAliasesCollection = commandsAliasesCollection;
 
     this.init(directory);
   }
@@ -43,8 +47,22 @@ export class CommandHandler {
         return;
       }
 
-      const { command } = require(inCommandsDir);
-      this._commandsCollection.set(command.name, command);
+      const fileName = path.parse(inCommandsDir);
+      const { command }: { command: Command; } = require(inCommandsDir);
+
+      // Register the aliases (if have)
+      if (command.aliases !== undefined) {
+        if (command.aliases.length !== 0) {
+          command.aliases.forEach((alias) => {
+            if(alias.length === 0) { return; }
+
+            this._commandsAliasesCollection.set(alias, command);
+          });
+        }
+      }
+
+      // Register the command
+      this._commandsCollection.set(fileName.name, command);
     });
   }
 }

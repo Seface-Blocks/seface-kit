@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { Event } from '../interfaces/Event';
+import { Event } from '../utils/interfaces/Event';
 
 export const moduleEvent: Event = {
   name: 'message',
@@ -13,9 +13,9 @@ export const moduleEvent: Event = {
 
     const command = args.shift().toLowerCase();
 
-    if(!command) { return; }
+    if (!command) { return; }
 
-    const commandCollection = instance.registeredCommands.get(command);
+    const commandCollection = instance.registeredCommands.get(command) || instance.registeredCommandAliases.get(command);
 
     if (commandCollection) {
       commandCollection.run(client, message, args);

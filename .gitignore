@@ -3,5 +3,4 @@ node_modules/
 build/
 
 # Files
-package-lock.json
 yarn-error.log

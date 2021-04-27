@@ -4,7 +4,6 @@ interface CommandExecutor {
   (client: Client, message: Message, args: string[]);
 }
 
-
 /**
  * @param {string} name The command name.
  * @param {description} name The description of command.
@@ -24,5 +23,6 @@ interface CommandExecutor {
 export interface Command {
   name: string;
   description?: string;
+  aliases?: string[];
   run: CommandExecutor;
 }
