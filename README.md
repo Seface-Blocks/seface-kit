@@ -17,6 +17,8 @@ export const command: Command = {
 ### Event example
 
 ```ts
+import { Event } from 'seface-kit';
+
 export const event: Event = {
   name: 'guildMemberAdd',
   run: async (client, instance, member: GuildMember) {
