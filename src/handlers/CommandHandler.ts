@@ -15,7 +15,7 @@ export class CommandHandler {
   private _commandsAliasesCollection: Collection<string, Command>;
 
   constructor(directory: string, commandsCollection: Collection<string, Command>,
-    commandsAliasesCollection: Collection<string, Command>, instance: SefaceKit) {
+              commandsAliasesCollection: Collection<string, Command>, instance: SefaceKit) {
 
     this.instance = instance;
     this._commandsCollection = commandsCollection;
