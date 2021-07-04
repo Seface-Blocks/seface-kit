@@ -4,7 +4,7 @@ import { Event } from '../utils/interfaces/Event';
 export const moduleEvent: Event = {
   name: 'message',
   run: async (client, instance, message: Message) => {
-    const { author, member, channel, content } = message;
+    const { author, channel, content } = message;
 
     if (author.bot) { return; }
     if (channel.type === 'dm') { return; }

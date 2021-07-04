@@ -17,6 +17,6 @@ interface EventExecutor {
  * }
  */
 export interface Event {
-  name: keyof ClientEvents | any;
+  name: keyof ClientEvents | string;
   run: EventExecutor;
 }
