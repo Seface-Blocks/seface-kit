@@ -6,21 +6,25 @@
   "repository": "https://github.com/Seface-Blocks/seface-kit",
   "author": "llgava <llgavamt@gmail.com>",
   "license": "MIT",
+
   "scripts": {
     "build": "tsc && clear && echo \"🏗️  Compiling...\"",
-    "test": "jest --watchAll --coverage"
+    "lint": "clear && yarn eslint . --ext .ts",
+    "bump": "yarn upgrade --latest"
   },
+
   "dependencies": {
     "chalk": "^4.1.1",
-    "discord.js": "^12.5.3"
+    "discord.js": "^13.1.0"
   },
+  
   "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@types/node": "^14.14.37",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.7.5",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
     "eslint": "^7.32.0",
-    "jest": "^27.1.0",
-    "ts-jest": "^27.0.5",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.5"
   }
 }

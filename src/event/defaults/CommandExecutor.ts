@@ -22,7 +22,7 @@ class CommandExecutor implements Event {
       if (commandCollected) {
         commandCollected.run(client, message, args);
       }
-    }
+    };
   }
 }
 

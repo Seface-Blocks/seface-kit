@@ -28,17 +28,17 @@ export default class SefaceKit {
   }
 
   /** Return the client of SefaceKit. */
-  public get client() { return this._client; }
+  public get client(): Client { return this._client; }
 
   /** Return all options of SefaceKit. */
-  public get options() { return this._options; }
+  public get options(): SefaceKitOptions { return this._options; }
 
   /** Return all registered commands. */
-  public get registeredCommands() { return this._commandsCollection; }
+  public get registeredCommands(): Collection<string, Command> { return this._commandsCollection; }
 
   /** Return all registered command aliases. */
-  public get registeredCommandAliases() { return this._commandsAliasesCollection; }
+  public get registeredCommandAliases(): Collection<string, Command> { return this._commandsAliasesCollection; }
 
   /** Return all registered events. */
-  public get registeredEvents() { return this._eventsCollection; }
+  public get registeredEvents(): Collection<string, Event> { return this._eventsCollection; }
 }
