@@ -1,6 +1,6 @@
 English | [Portuguese](/*)
 
-**seface-kit** is a open-source project trying to 
+**seface-kit** This project is under development...
 
 ### Command example
 
