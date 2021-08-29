@@ -1,8 +1,8 @@
 import { Client, ClientEvents } from 'discord.js';
-import SefaceKit from '../..';
+import SefaceKit from '..';
 
-interface EventExecutor {
-  (client: Client, instance: SefaceKit, ...args: any[]);
+export interface EventExecutor {
+  (client: Client, instance: SefaceKit, ...args: any[]): void;
 }
 
 /**

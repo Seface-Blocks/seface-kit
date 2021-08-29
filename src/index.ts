@@ -1,12 +1,11 @@
 import { Client, Collection } from 'discord.js';
 
-import { Event } from './utils/interfaces/Event';
-import { Command } from './utils/interfaces/Command';
-import { moduleEventDir } from './config.json';
-import { EventHandler } from './handlers/EventHandler';
-import { CommandHandler } from './handlers/CommandHandler';
-import { SefaceKitOptions } from './utils/interfaces/SefaceKitOptions';
-import { ModuleEventHandler } from './handlers/ModuleEventHandler';
+import { Event } from './interfaces/Event';
+import { Command } from './interfaces/Command';
+import { EventHandler } from './event/EventHandler';
+import { CommandHandler } from './command/CommandHandler';
+import { SefaceKitOptions } from './interfaces/SefaceKit';
+import { ModuleEventHandler } from './event/ModuleEventHandler';
 
 export default class SefaceKit {
   private _client: Client;
@@ -16,7 +15,7 @@ export default class SefaceKit {
   private _eventsCollection: Collection<string, Event>;
 
   /** TODO: jsdoc */
-  constructor(client: Client, options: SefaceKitOptions) {
+  constructor(client?: Client, options?: SefaceKitOptions) {
     this._client = client;
     this._options = options;
     this._commandsCollection = new Collection();
@@ -25,7 +24,7 @@ export default class SefaceKit {
 
     new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection, this);
     new EventHandler(options.eventsIn, this._eventsCollection, this);
-    new ModuleEventHandler(moduleEventDir, this._eventsCollection, this);
+    new ModuleEventHandler('event/defaults', this._eventsCollection, this);
   }
 
   /** Return the client of SefaceKit. */

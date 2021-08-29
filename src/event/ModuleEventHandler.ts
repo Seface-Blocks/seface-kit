@@ -3,11 +3,8 @@ import path from 'path';
 import { Collection } from 'discord.js';
 
 import SefaceKit from '..';
-import { Event } from '../utils/interfaces/Event';
+import { Event } from '../interfaces/Event';
 import Utils from '../utils/Utils';
-import Chalk from 'chalk';
-import { messages } from '../config.json';
-import { HandlerType } from '../utils/enums/HandlerTypes';
 
 /** An EventHandler to read and register all events in the seface-kit module. */
 export class ModuleEventHandler {
@@ -34,15 +31,7 @@ export class ModuleEventHandler {
       if (dirStat.isDirectory()) { return this.init(eventsSubdir); }
 
       // Checks if the file has a valid extension.
-      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) {
-        if (this.instance.options.showWarns) {
-          console.warn(`${Chalk.bold.yellow('WARNING')} ${messages.invalidExtension
-            .replace('{file}', Chalk.magenta(fileOrDir))}`
-            .replace('{handlerType}', Chalk.magenta(HandlerType[this.constructor.name])));
-        }
-
-        return;
-      }
+      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { moduleEvent }: { moduleEvent: Event; } = await import(inEventsDir);
 

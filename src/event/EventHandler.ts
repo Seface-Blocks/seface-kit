@@ -1,13 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import Chalk from 'chalk';
 import { Collection } from 'discord.js';
 
 import SefaceKit from '..';
 import Utils from '../utils/Utils';
-import { Event } from '../utils/interfaces/Event';
-import { messages } from '../config.json';
-import { HandlerType } from '../utils/enums/HandlerTypes';
+import { Event } from '../interfaces/Event';
 
 /** An EventHandler to read and register all events in the project. */
 export class EventHandler {
@@ -34,15 +31,7 @@ export class EventHandler {
       if (dirStat.isDirectory()) { return this.init(eventsSubdir); }
 
       // Checks if the file has a valid extension.
-      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) {
-        if (this.instance.options.showWarns) {
-          console.warn(`${Chalk.bold.yellow('WARNING')} ${messages.invalidExtension
-            .replace('{file}', Chalk.magenta(fileOrDir))}`
-            .replace('{handlerType}', Chalk.magenta(HandlerType[this.constructor.name])));
-        }
-
-        return;
-      }
+      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { event }: { event: Event; } = await import(inEventsDir);
 
