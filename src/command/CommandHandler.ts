@@ -2,12 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { Collection } from 'discord.js';
 
-import SefaceKit from '..';
 import Utils from '../utils/Utils';
 import { Command } from '../interfaces/Command';
 
 export class CommandHandler {
-  private instance: SefaceKit;
   private commandsCollection: Collection<string, Command>;
   private commandsAliasesCollection: Collection<string, Command>;
 
@@ -15,10 +13,8 @@ export class CommandHandler {
     directory: string,
     commandsCollection: Collection<string, Command>,
     commandsAliasesCollection: Collection<string, Command>,
-    instance: SefaceKit
   ) {
 
-    this.instance = instance;
     this.commandsCollection = commandsCollection;
     this.commandsAliasesCollection = commandsAliasesCollection;
 

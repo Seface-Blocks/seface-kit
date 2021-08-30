@@ -1,16 +1,15 @@
 {
   "name": "seface-kit",
-  "version": "indev-0.0.1",
+  "description": "Seface Kit is a Command and Event Handler for discord.js v13.",
+  "version": "beta-1.0.0",
   "main": "build/src/index.js",
-  "types": "./build/@types/index.d.ts",
-  "repository": "https://github.com/Seface-Blocks/seface-kit",
-  "author": "llgava <llgavamt@gmail.com>",
-  "license": "MIT",
+  "types": "./build/typings/index.d.ts",
+  "keywords": ["discordjs", "command-handler", "event-handler", "javascript", "typescript"],
 
   "scripts": {
-    "build": "tsc",
-    "declaration": "tsc --emitDeclarationOnly",
-    "lint": "clear && yarn eslint . --ext .ts",
+    "build": "babel ./src --extensions \".js,.ts\" --out-dir ./build/src --copy-files --no-copy-ignored",
+    "build:types": "tsc --emitDeclarationOnly",
+    "lint": "eslint . --ext .ts",
     "bump": "yarn upgrade --latest"
   },
 
@@ -18,14 +17,13 @@
     "chalk": "^4.1.1",
     "discord.js": "^13.1.0"
   },
-  
+
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
     "@babel/node": "^7.14.9",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
-    "@types/mocha": "^9.0.0",
     "@types/node": "^16.7.5",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
@@ -33,5 +31,10 @@
     "eslint": "^7.32.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
-  }
+  },
+
+  "repository": "https://github.com/Seface-Blocks/seface-kit",
+  "bugs": { "url": "https://github.com/Seface-Blocks/seface-kit/issues" },
+  "author": "llgava <llgavamt@gmail.com>",
+  "license": "MIT"
 }

@@ -22,23 +22,23 @@ export default class SefaceKit {
     this._commandsAliasesCollection = new Collection();
     this._eventsCollection = new Collection();
 
-    new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection, this);
+    new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection);
     new EventHandler(options.eventsIn, this._eventsCollection, this);
     new SefaceKitEvents('event/defaults', this._eventsCollection, this);
   }
 
-  /** Return the client of SefaceKit. */
+  /** @returns Discord Client instance. */
   public get client(): Client { return this._client; }
 
-  /** Return all options of SefaceKit. */
+  /** @returns Seface Kit options. */
   public get options(): SefaceKitOptions { return this._options; }
 
-  /** Return all registered commands. */
+  /** @returns Registered commands. */
   public get registeredCommands(): Collection<string, Command> { return this._commandsCollection; }
 
-  /** Return all registered command aliases. */
+  /** @returns Registered events. */
   public get registeredCommandAliases(): Collection<string, Command> { return this._commandsAliasesCollection; }
 
-  /** Return all registered events. */
+  /** @returns Registered events. */
   public get registeredEvents(): Collection<string, Event> { return this._eventsCollection; }
 }
