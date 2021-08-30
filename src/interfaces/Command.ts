@@ -20,5 +20,6 @@ export interface Command {
   name: string;
   description?: string;
   aliases?: string[];
+  isSlashCommand?: boolean;
   run: CommandExecutor;
 }
