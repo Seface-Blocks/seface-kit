@@ -11,6 +11,11 @@ export class EventHandler {
   private instance: SefaceKit;
   private _eventsCollection: Collection<string, Event>;
 
+  /**
+   * @param directory The directory where the events are.
+   * @param collection The collection where the events will be registered.
+   * @param instance The instance of the SefaceKit.
+   */
   constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit) {
     this.instance = instance;
     this._eventsCollection = collection;

@@ -3,22 +3,29 @@ import path from 'path';
 import { Collection } from 'discord.js';
 
 import SefaceKit from '..';
-import { Event } from '../interfaces/Event';
 import Utils from '../utils/Utils';
+import { Event } from '../interfaces/Event';
 
-/** An EventHandler to read and register all events in the seface-kit module. */
-export class ModuleEventHandler {
+/** An EventHandler to read and register all events in the project. */
+export class SefaceKitEvents {
   private instance: SefaceKit;
-  private _eventsCollection: Collection<string, Event>;
+  private _sefaceKitEventsCollection: Collection<string, Event>;
 
+  /**
+   * @param directory The directory where the events are.
+   * @param collection The collection where the events will be registered.
+   * @param instance The instance of the SefaceKit.
+   */
   constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit) {
     this.instance = instance;
-    this._eventsCollection = collection;
+    this._sefaceKitEventsCollection = collection;
 
     this.init(directory);
   }
 
-  /** Initialize the Event Handler. */
+  /**
+   * @param directory The directory where the events are.
+   */
   private init(directory: string) {
     const eventsDir = path.join(__dirname, '..', directory);
 
@@ -35,7 +42,8 @@ export class ModuleEventHandler {
 
       const { moduleEvent }: { moduleEvent: Event; } = await import(inEventsDir);
 
-      this._eventsCollection.set(moduleEvent.name, moduleEvent);
+      /* moduleEvent.name */
+      this._sefaceKitEventsCollection.set(moduleEvent.name, moduleEvent);
       this.instance.client.on(moduleEvent.name, moduleEvent.run.bind(null, this.instance.client, this.instance));
     });
   }

@@ -1,6 +1,4 @@
-import SefaceKit from '..';
-
-class Utils extends SefaceKit {
+class Utils{
   
   /**
    * Returns if a file is has valid extension.
@@ -11,10 +9,6 @@ class Utils extends SefaceKit {
   public checkFileExtension(file: string, extensions: string[]): boolean {
     if(extensions.includes(file.substr(file.lastIndexOf('.')))) {
       return true;
-    }
-
-    if(this.options.showWarns) {
-      console.warn(`The file ${file} has an invalid extension.`);
     }
 
     return false;

@@ -5,7 +5,7 @@ import { Command } from './interfaces/Command';
 import { EventHandler } from './event/EventHandler';
 import { CommandHandler } from './command/CommandHandler';
 import { SefaceKitOptions } from './interfaces/SefaceKit';
-import { ModuleEventHandler } from './event/ModuleEventHandler';
+import { SefaceKitEvents } from './event/SefaceKitEvents';
 
 export default class SefaceKit {
   private _client: Client;
@@ -24,7 +24,7 @@ export default class SefaceKit {
 
     new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection, this);
     new EventHandler(options.eventsIn, this._eventsCollection, this);
-    new ModuleEventHandler('event/defaults', this._eventsCollection, this);
+    new SefaceKitEvents('event/defaults', this._eventsCollection, this);
   }
 
   /** Return the client of SefaceKit. */
