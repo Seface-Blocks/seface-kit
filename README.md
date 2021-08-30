@@ -1,6 +1,6 @@
 ## Seface Kit
 ### A powerful discord.js Command and Event handler!
-[English](./../README.md) | Portuguese
+English | [Portuguese](./.github/README.pt_BR.md)
 
 ---
 <br/>
