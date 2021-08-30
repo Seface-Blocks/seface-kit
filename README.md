@@ -1,32 +1,49 @@
-English | [Portuguese](/*)
+## Seface Kit
+### A powerful discord.js Command and Event handler!
+[English](./../README.md) | Portuguese
 
-**seface-kit** This project is under development...
+---
+<br/>
 
-### Command example
+**Seface Kit** is a Command and Event Handler for [discord.js v13](https://github.com/discordjs/discord.js/releases/tag/13.0.0). Let Seface Kit do the heavy lifting of recording your commands and events, keeping your project clean and organized!
 
-```ts
-// You can use .js file too, just remove the Command  type on the constant.
-import { Command } from 'seface-kit';
+> **Note:** Seface Kit allows organization by subfolders.
 
-export const command: Command = {
-  name: 'ping',
-  description: 'Returns pong!',
-  aliases: ['p'],
-  run: (client, message, args) => {
-    message.channel.send('Pong!');
-  }
-};
+- [Instalations](#instalations)
+  - [Requirements](#requirements)
+  - [Installing](#installing)
+- [Adding to your project](#adding-to-your-project)
+
+## Instalations
+### Requirements
+  * [Node.js](https://nodejs.org/en/) 16.6.0 or newer;
+  * [discord.js](https://discord.js.org/) 13.0.0 or newer;
+
+### Installing
+Once your project meets the requirements, run the command below in the project terminal to install the package.
+
+```sh
+yarn add seface-kit or npm install seface-kit
 ```
 
-### Event example
+## Adding to your project
+**JavaScript and TypeScript support!** 🎉
 
-```ts
-import { Event } from 'seface-kit';
+```js
+import { Client, Intents } from 'discord.js';
+import SefaceKit from 'seface-kit';
 
-export const event: Event = {
-  name: 'guildMemberAdd',
-  run: async (client, instance, member: GuildMember) {
-    console.log(`${member.nickname} has joined the server!`)
-  }
-};
+const bot = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+bot.on('ready', () => {
+  new SefaceKit(bot, {
+    commandsIn: 'commands',
+    eventsIn: 'events',
+    showWarns: true,
+    prefix: '!'
+  })
+})
+
+bot.login('BOT_TOKEN');
 ```
+[Here](./examples) you can found some examples of how to create commands and listen events.

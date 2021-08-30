@@ -10,6 +10,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended'
   ],
 
+  ignorePatterns: ['build/', 'examples/'],
+
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 12 },
   plugins: ['@typescript-eslint'],

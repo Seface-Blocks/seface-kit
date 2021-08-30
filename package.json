@@ -6,7 +6,7 @@
   "repository": "https://github.com/Seface-Blocks/seface-kit",
   "author": "llgava <llgavamt@gmail.com>",
   "license": "MIT",
-  
+
   "scripts": {
     "build": "tsc",
     "declaration": "tsc --emitDeclarationOnly",
@@ -18,7 +18,7 @@
     "chalk": "^4.1.1",
     "discord.js": "^13.1.0"
   },
-
+  
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
