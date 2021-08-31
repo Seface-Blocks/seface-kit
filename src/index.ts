@@ -22,7 +22,7 @@ export default class SefaceKit {
     this._commandsAliasesCollection = new Collection();
     this._eventsCollection = new Collection();
 
-    new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection);
+    new CommandHandler(options.commandsIn, this._commandsCollection, this._commandsAliasesCollection, this);
     new EventHandler(options.eventsIn, this._eventsCollection, this);
     new SefaceKitEvents('event/defaults', this._eventsCollection, this);
   }

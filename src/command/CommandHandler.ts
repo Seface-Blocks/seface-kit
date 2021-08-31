@@ -1,22 +1,30 @@
 import fs from 'fs';
 import path from 'path';
 import { Collection } from 'discord.js';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
 
 import Utils from '../utils/Utils';
 import { Command } from '../interfaces/Command';
+import SefaceKit from '..';
 
 export class CommandHandler {
+  private instance: SefaceKit;
   private commandsCollection: Collection<string, Command>;
   private commandsAliasesCollection: Collection<string, Command>;
+  private restDiscord: REST;
 
   constructor(
     directory: string,
     commandsCollection: Collection<string, Command>,
     commandsAliasesCollection: Collection<string, Command>,
+    instance: SefaceKit
   ) {
 
+    this.instance = instance;
     this.commandsCollection = commandsCollection;
     this.commandsAliasesCollection = commandsAliasesCollection;
+    this.restDiscord = new REST({ version: '9' }).setToken(this.instance.client.token);
 
     this.init(directory);
   }
@@ -39,8 +47,17 @@ export class CommandHandler {
       const fileName = path.parse(inCommandsDir);
       const { command }: { command: Command; } = require(inCommandsDir);
 
+      if (command.isSlashCommand) {
+        this.registrySlashCommand(command);
+
+        console.log(`${command.name} registered as Slash Command!`);
+        return;
+      }
+
       this.registerCommands(fileName.name, command);
       this.registerAliases(command);
+
+      
 
     });
   }
@@ -69,6 +86,17 @@ export class CommandHandler {
           this.commandsAliasesCollection.set(alias, command);
         });
       }
+    }
+  }
+
+  private async registrySlashCommand(command: Command) {
+    try {
+      await this.restDiscord.put(
+        Routes.applicationCommands(this.instance.client.user.id),
+        { body: command }
+      );
+    } catch (err) {
+      console.error(err);
     }
   }
 }
