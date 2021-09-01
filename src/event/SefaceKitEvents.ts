@@ -20,13 +20,14 @@ export class SefaceKitEvents {
     this.instance = instance;
     this._sefaceKitEventsCollection = collection;
 
-    this.init(directory);
+    this.readSefaceKitEvents(directory);
   }
 
   /**
+   * Reads all Seface Kit events in the directory and registers them.
    * @param directory The directory where the events are.
    */
-  private init(directory: string) {
+  private readSefaceKitEvents(directory: string) {
     const eventsDir = path.join(__dirname, '..', directory);
 
     fs.readdirSync(eventsDir).forEach(async (fileOrDir) => {
@@ -34,17 +35,17 @@ export class SefaceKitEvents {
       const eventsSubdir = path.join('..', directory, fileOrDir);
       const dirStat = fs.lstatSync(inEventsDir);
 
-      // Loop the function to call everytime when the readdirSync enter in another folder.
-      if (dirStat.isDirectory()) { return this.init(eventsSubdir); }
+      // Loop this function while it's a directory.
+      if (dirStat.isDirectory()) { return this.readSefaceKitEvents(eventsSubdir); }
 
-      // Checks if the file has a valid extension.
+      // Check if the file is a .ts or .js file.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { moduleEvent }: { moduleEvent: Event; } = await import(inEventsDir);
 
       /* moduleEvent.name */
       this._sefaceKitEventsCollection.set(moduleEvent.name, moduleEvent);
-      this.instance.client.on(moduleEvent.name, moduleEvent.run.bind(null, this.instance.client, this.instance));
+      this.instance.client.on(moduleEvent.name, moduleEvent.execute.bind(null, this.instance.client, this.instance));
     });
   }
 }

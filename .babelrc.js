@@ -10,7 +10,10 @@ module.exports = {
   plugins: [
     ['module-resolver', {
       root: ['./src'],
-      alias: {}
+      alias: {
+        '@interfaces': './src/interfaces',
+        '@utils': './src/utils'
+      }
     }]
   ],
 

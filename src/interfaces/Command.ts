@@ -1,10 +1,12 @@
-import { Client, Message } from 'discord.js';
+import { Client, CommandInteraction, Message } from 'discord.js';
 
 interface CommandExecutor {
-  (client: Client, message: Message, args: string[]);
+  (client: Client, interaction?: CommandInteraction, message?: Message, args?: string[]);
 }
 
 /**
+ * Use `run` for commands with prefix and `execute` for slash commands.
+ * 
  * @example
  * export const command: Command = {
  *   name: 'ping',
@@ -21,5 +23,5 @@ export interface Command {
   description?: string;
   aliases?: string[];
   isSlashCommand?: boolean;
-  run: CommandExecutor;
+  execute?: CommandExecutor;
 }

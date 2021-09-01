@@ -1,36 +1,39 @@
 import fs from 'fs';
 import path from 'path';
 import { Collection } from 'discord.js';
+
+import Utils from '@utils/Utils';
+import { Command } from '@interfaces/Command';
+
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 
-import Utils from '../utils/Utils';
-import { Command } from '../interfaces/Command';
-import SefaceKit from '..';
-
 export class CommandHandler {
-  private instance: SefaceKit;
   private commandsCollection: Collection<string, Command>;
   private commandsAliasesCollection: Collection<string, Command>;
-  private restDiscord: REST;
+  private slashCommandsCollection: Collection<string, Command>;
+  private restDiscordAPI: REST;
 
   constructor(
     directory: string,
     commandsCollection: Collection<string, Command>,
     commandsAliasesCollection: Collection<string, Command>,
-    instance: SefaceKit
+    slashCommandsCollection: Collection<string, Command>
   ) {
 
-    this.instance = instance;
     this.commandsCollection = commandsCollection;
     this.commandsAliasesCollection = commandsAliasesCollection;
-    this.restDiscord = new REST({ version: '9' }).setToken(this.instance.client.token);
+    this.slashCommandsCollection = slashCommandsCollection;
+    this.restDiscordAPI = new REST({ version: '9' }).setToken('Nzg4MjQ5ODIwMDM1ODA5Mjkw.X9gw2g.iVcLAsOY4fOCyFgdg4mYvJFM9yM');
 
-    this.init(directory);
+    this.readCommands(directory);
   }
 
-  /** Initialize the Command Handler. */
-  private init(directory: string) {
+  /**
+   * Reads all commands in the directory and registers them.
+   * @param directory The directory where the commands are.
+   */
+  private readCommands(directory: string) {
     const commandsDir = path.join(require.main.path, directory);
 
     fs.readdirSync(commandsDir).forEach((fileOrDir) => {
@@ -38,43 +41,52 @@ export class CommandHandler {
       const commandsSubdir = path.join(directory, fileOrDir);
       const dirStat = fs.lstatSync(inCommandsDir);
 
-      // Loop the function to call everytime when the readdirSync enter in another folder.
-      if (dirStat.isDirectory()) { return this.init(commandsSubdir); }
+      // Loop this function while it's a directory.
+      if (dirStat.isDirectory()) { return this.readCommands(commandsSubdir); }
 
-      // Checks if the file has a valid extension.
+      // Check if the file is a .ts or .js file.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
-      const fileName = path.parse(inCommandsDir);
       const { command }: { command: Command; } = require(inCommandsDir);
 
+      // If the command are marked as slash command, they will be registered.
       if (command.isSlashCommand) {
-        this.registrySlashCommand(command);
-
-        console.log(`${command.name} registered as Slash Command!`);
+        this.registerSlashCommands(command);
         return;
       }
 
-      this.registerCommands(fileName.name, command);
+      this.registerCommands(command);
       this.registerAliases(command);
-
-      
-
     });
+
+  }
+
+  private async registerSlashCommands(command: Command) {
+    this.slashCommandsCollection.set(command.name, command);
+
+    try {
+      await this.restDiscordAPI.put(
+        Routes.applicationGuildCommands('788249820035809290', '880655196986949682'),
+        { body: this.slashCommandsCollection }
+      );
+
+      console.log('Comando registrado.');
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   /**
    * Register every command in the Commands Collection.
-   * 
    * @param name The command name.
    * @param command The command object.
    */
-  private registerCommands(name: string, command: Command) {
-    this.commandsCollection.set(name, command);
+  private registerCommands(command: Command) {
+    this.commandsCollection.set(command.name, command);
   }
 
   /**
    * Register command aliases in the Commands Aliases Collection.
-   * 
    * @param command The command object.
    */
   private registerAliases(command: Command) {
@@ -86,17 +98,6 @@ export class CommandHandler {
           this.commandsAliasesCollection.set(alias, command);
         });
       }
-    }
-  }
-
-  private async registrySlashCommand(command: Command) {
-    try {
-      await this.restDiscord.put(
-        Routes.applicationCommands(this.instance.client.user.id),
-        { body: command }
-      );
-    } catch (err) {
-      console.error(err);
     }
   }
 }

@@ -1,9 +1,9 @@
 import { Message } from 'discord.js';
-import { Event } from '../../interfaces/Event';
+import { Event } from '@interfaces/Event';
 
 export const moduleEvent: Event = {
   name: 'messageCreate',
-  run: async (client, instance, message: Message) => {
+  execute: async (client, instance, message: Message) => {
     const { author, channel, content } = message;
 
     if (author.bot) { return; }
@@ -18,7 +18,7 @@ export const moduleEvent: Event = {
     const commandCollected = instance.registeredCommands.get(command) || instance.registeredCommandAliases.get(command);
 
     if (commandCollected) {
-      commandCollected.run(client, message, args);
+      commandCollected.execute(client, null, message, args);
     }
   }
 };

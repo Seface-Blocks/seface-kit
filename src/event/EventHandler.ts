@@ -20,11 +20,14 @@ export class EventHandler {
     this.instance = instance;
     this._eventsCollection = collection;
 
-    this.init(directory);
+    this.readEvents(directory);
   }
 
-  /** Initialize the Event Handler. */
-  private init(directory: string) {
+  /**
+   * Reads all events in the directory and registers them.
+   * @param directory The directory where the events are.
+   */
+  private readEvents(directory: string) {
     const eventsDir = path.join(require.main.path, directory);
 
     fs.readdirSync(eventsDir).forEach(async (fileOrDir) => {
@@ -32,16 +35,16 @@ export class EventHandler {
       const eventsSubdir = path.join(directory, fileOrDir);
       const dirStat = fs.lstatSync(inEventsDir);
 
-      // Loop the function to call everytime when the readdirSync enter in another folder.
-      if (dirStat.isDirectory()) { return this.init(eventsSubdir); }
+      // Loop this function while it's a directory.
+      if (dirStat.isDirectory()) { return this.readEvents(eventsSubdir); }
 
-      // Checks if the file has a valid extension.
+      // Check if the file is a .ts or .js file.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { event }: { event: Event; } = await import(inEventsDir);
 
       this._eventsCollection.set(event.name, event);
-      this.instance.client.on(event.name, event.run.bind(null, this.instance.client, this.instance));
+      this.instance.client.on(event.name, event.execute.bind(null, this.instance.client, this.instance));
     });
   }
 }

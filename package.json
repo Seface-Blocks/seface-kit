@@ -12,12 +12,14 @@
     "typescript"
   ],
   "scripts": {
-    "build": "babel ./src --extensions \".js,.ts\" --out-dir ./build/src --copy-files --no-copy-ignored",
+    "build:module": "babel ./src --extensions \".js,.ts\" --out-dir ./build/src --copy-files --no-copy-ignored",
     "build:types": "tsc --emitDeclarationOnly",
+    "build": "yarn build:module && yarn build:types",
     "lint": "eslint . --ext .ts",
     "bump": "yarn upgrade --latest"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "chalk": "^4.1.1",
     "discord-api-types": "^0.22.0",
