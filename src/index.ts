@@ -36,14 +36,14 @@ export default class SefaceKit {
   public get options(): SefaceKitOptions { return this._options; }
 
   /** @returns Registered commands. */
-  public get registeredCommands(): Collection<string, Command> { return this._commandsCollection; }
+  public get getCommands(): Collection<string, Command> { return this._commandsCollection; }
 
   /** @returns Registered commands aliases. */
-  public get registeredCommandAliases(): Collection<string, Command> { return this._commandsAliasesCollection; }
+  public get getCommandsAliases(): Collection<string, Command> { return this._commandsAliasesCollection; }
 
   /** @returns Registered events. */
-  public get registeredEvents(): Collection<string, Event> { return this._eventsCollection; }
+  public get getEvents(): Collection<string, Event> { return this._eventsCollection; }
 
   /** @returns Registered slash commands. */
-  public get registeredSlashCommands(): Collection<string, Command> { return this._slashCommandsCollection; }
+  public get getSlashCommands(): Collection<string, Command> { return this._slashCommandsCollection; }
 }

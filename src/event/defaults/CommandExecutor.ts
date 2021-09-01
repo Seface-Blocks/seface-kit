@@ -15,7 +15,7 @@ export const moduleEvent: Event = {
 
     if (!command) { return; }
 
-    const commandCollected = instance.registeredCommands.get(command) || instance.registeredCommandAliases.get(command);
+    const commandCollected = instance.getCommands.get(command) || instance.getCommandsAliases.get(command);
 
     if (commandCollected) {
       commandCollected.execute(client, null, message, args);

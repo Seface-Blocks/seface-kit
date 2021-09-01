@@ -55,6 +55,7 @@ export class CommandHandler {
         return;
       }
 
+
       this.registerCommands(command);
       this.registerAliases(command);
     });
@@ -66,7 +67,7 @@ export class CommandHandler {
 
     try {
       await this.restDiscordAPI.put(
-        Routes.applicationGuildCommands('788249820035809290', '880655196986949682'),
+        Routes.applicationCommands('788249820035809290'),
         { body: this.slashCommandsCollection }
       );
 

@@ -4,6 +4,13 @@ interface CommandExecutor {
   (client: Client, interaction?: CommandInteraction, message?: Message, args?: string[]);
 }
 
+interface CommandOptions {
+  name: string;
+  description: string;
+  type: number;
+  required: boolean;
+}
+
 /**
  * Use `run` for commands with prefix and `execute` for slash commands.
  * 
@@ -22,6 +29,7 @@ export interface Command {
   name: string;
   description?: string;
   aliases?: string[];
+  options?: CommandOptions[];
   isSlashCommand?: boolean;
   execute?: CommandExecutor;
 }

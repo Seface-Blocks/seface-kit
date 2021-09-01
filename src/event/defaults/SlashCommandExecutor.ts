@@ -5,7 +5,7 @@ export const moduleEvent: Event = {
   execute: async (client, instance, interaction) => {
     if (!interaction.isCommand()) { return; }
 
-    const command = instance.registeredSlashCommands.get(interaction.commandName);
+    const command = instance.getSlashCommands.get(interaction.commandName);
 
     if (!command) { return; }
 
