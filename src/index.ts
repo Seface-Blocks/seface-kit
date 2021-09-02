@@ -29,21 +29,12 @@ export default class SefaceKit {
     new SefaceKitEvents('event/defaults', this._events, this);
   }
 
-  /** @returns Discord Client instance. */
   public get client(): Client { return this._client; }
-
-  /**  @returns Seface Kit options. */
   public get options(): SefaceKitOptions { return this._options; }
 
-  /**  @returns Registered commands. */
   public get getPrefixCommands(): Collection<string, PrefixCommand> { return this._prefixCommands; }
-
-  /**  @returns Registered commands aliases. */
   public get getPrefixCommandsAliases(): Collection<string, PrefixCommand> { return this._prefixCommandsAliases; }
-
-  /**  @returns Registered slash commands. */
   public get getSlashCommands(): Collection<string, SlashCommand> { return this._slashCommands; }
 
-  /**  @returns Registered events. */
   public get getEvents(): Collection<string, Event> { return this._events; }
 }
