@@ -1,0 +1,11 @@
+# Folders
+**/examples
+**/src
+**/github
+
+# Files
+.babelrc.js
+.eslintrc.js
+.gitignore
+tsconfig.json
+yarn-error.log
