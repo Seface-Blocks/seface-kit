@@ -1,8 +1,8 @@
 # Folders
-**/examples
-./src
-**/github
-**/.vscode
+**/examples/
+./src/
+**/github/
+**/.vscode/
 
 # Files
 .babelrc.js

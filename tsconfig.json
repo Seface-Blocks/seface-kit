@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "declarationDir": "./build/src/typings",
+    "declarationDir": "./@types",
     "strictNullChecks": false,
     "noImplicitAny": false,
     "allowJs": true,
