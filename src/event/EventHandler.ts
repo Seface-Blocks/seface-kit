@@ -6,28 +6,22 @@ import SefaceKit from '..';
 import Utils from '../utils/Utils';
 import { Event } from '../interfaces/Event';
 
-/** An EventHandler to read and register all events in the project. */
 export class EventHandler {
   private instance: SefaceKit;
   private _eventsCollection: Collection<string, Event>;
 
-  /**
-   * @param directory The directory where the events are.
-   * @param collection The collection where the events will be registered.
-   * @param instance The instance of the SefaceKit.
-   */
   constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit) {
     this.instance = instance;
     this._eventsCollection = collection;
 
-    this.readEvents(directory);
+    this.readEventsDir(directory);
   }
 
   /**
    * Reads all events in the directory and registers them.
    * @param directory The directory where the events are.
    */
-  private readEvents(directory: string) {
+  private readEventsDir(directory: string) {
     const eventsDir = path.join(require.main.path, directory);
 
     fs.readdirSync(eventsDir).forEach(async (fileOrDir) => {
@@ -36,15 +30,23 @@ export class EventHandler {
       const dirStat = fs.lstatSync(inEventsDir);
 
       // Loop this function while it's a directory.
-      if (dirStat.isDirectory()) { return this.readEvents(eventsSubdir); }
+      if (dirStat.isDirectory()) { return this.readEventsDir(eventsSubdir); }
 
-      // Check if the file is a .ts or .js file.
+      // Check the file extension.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { event }: { event: Event; } = await import(inEventsDir);
 
-      this._eventsCollection.set(event.name, event);
+      this.registerEvent(event);
       this.instance.client.on(event.name, event.execute.bind(null, this.instance.client, this.instance));
     });
+  }
+
+  /**
+   * Register a new Event.
+   * @param event The event to be registered.
+   */
+  private registerEvent(event: Event) {
+    this._eventsCollection.set(event.name, event);
   }
 }

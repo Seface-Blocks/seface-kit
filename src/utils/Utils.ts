@@ -1,7 +1,7 @@
-class Utils{
+class Utils {
   
   /**
-   * Returns if a file is has valid extension.
+   * Returns if a file has a valid extension.
    * 
    * @param file The file name.
    * @param extensions The valid extensions.

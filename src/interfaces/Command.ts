@@ -1,35 +1,33 @@
-import { Client, CommandInteraction, Message } from 'discord.js';
+import { Client, CommandInteraction, Guild, Message } from 'discord.js';
 
-interface CommandExecutor {
-  (client: Client, interaction?: CommandInteraction, message?: Message, args?: string[]);
+interface PrefixCommandExecutor {
+  (client: Client, message: Message, args: string[]): Promise<void>;
 }
 
-interface CommandOptions {
+interface SlashCommandExecutor {
+  (client: Client, interaction: CommandInteraction): Promise<void>;
+}
+
+interface CommandBase {
+  name: string;
+  description: string;
+  isSlashCommand?: boolean;
+}
+
+interface SlashCommandOptions {
   name: string;
   description: string;
   type: number;
-  required: boolean;
+  required?: boolean;
 }
 
-/**
- * Use `run` for commands with prefix and `execute` for slash commands.
- * 
- * @example
- * export const command: Command = {
- *   name: 'ping',
- *   description: 'Reply pong to the message author.',
- *   run: (client, message, args) => {
- *     if (msg.author.bot) { return; }
- *
- *     message.reply("Pong!");
- *   }
- * }
- */
-export interface Command {
-  name: string;
-  description?: string;
+export interface SlashCommand extends CommandBase {
+  options?: SlashCommandOptions[];
+  registerOn?: string[];
+  execute?: SlashCommandExecutor;
+}
+
+export interface PrefixCommand extends CommandBase {
   aliases?: string[];
-  options?: CommandOptions[];
-  isSlashCommand?: boolean;
-  execute?: CommandExecutor;
+  execute?: PrefixCommandExecutor;
 }

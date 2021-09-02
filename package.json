@@ -4,8 +4,13 @@
   "version": "beta-1.0.0",
   "main": "build/src/index.js",
   "types": "./build/typings/index.d.ts",
-  "keywords": ["discordjs", "command-handler", "event-handler", "javascript", "typescript"],
-
+  "keywords": [
+    "discordjs",
+    "command-handler",
+    "event-handler",
+    "javascript",
+    "typescript"
+  ],
   "scripts": {
     "build:module": "babel ./src --extensions \".js,.ts\" --out-dir ./build/src --copy-files --no-copy-ignored",
     "build:types": "tsc --emitDeclarationOnly",
@@ -13,15 +18,13 @@
     "lint": "eslint . --ext .ts",
     "bump": "yarn upgrade --latest"
   },
-
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
+    "chalk": "^4.1.1",
     "discord-api-types": "^0.22.0",
-    "discord.js": "^13.1.0",
-    "chalk": "^4.1.1"
+    "discord.js": "^13.1.0"
   },
-
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
@@ -36,9 +39,10 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
   },
-
   "repository": "https://github.com/Seface-Blocks/seface-kit",
-  "bugs": { "url": "https://github.com/Seface-Blocks/seface-kit/issues" },
+  "bugs": {
+    "url": "https://github.com/Seface-Blocks/seface-kit/issues"
+  },
   "author": "llgava <llgavamt@gmail.com>",
   "license": "MIT"
 }

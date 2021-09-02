@@ -38,14 +38,21 @@ export class SefaceKitEvents {
       // Loop this function while it's a directory.
       if (dirStat.isDirectory()) { return this.readSefaceKitEvents(eventsSubdir); }
 
-      // Check if the file is a .ts or .js file.
+      // Check the file extension.
       if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { moduleEvent }: { moduleEvent: Event; } = await import(inEventsDir);
 
-      /* moduleEvent.name */
-      this._sefaceKitEventsCollection.set(moduleEvent.name, moduleEvent);
+      this.registerSefaceKitEvent(moduleEvent);
       this.instance.client.on(moduleEvent.name, moduleEvent.execute.bind(null, this.instance.client, this.instance));
     });
+  }
+
+  /**
+   * Register a new Seface Kit event.
+   * @param event The Seface Kit event to be registered.
+   */
+  private registerSefaceKitEvent(event: Event) {
+    this._sefaceKitEventsCollection.set(event.name, event);
   }
 }

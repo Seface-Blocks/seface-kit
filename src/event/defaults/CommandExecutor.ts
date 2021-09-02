@@ -15,10 +15,10 @@ export const moduleEvent: Event = {
 
     if (!command) { return; }
 
-    const commandCollected = instance.getCommands.get(command) || instance.getCommandsAliases.get(command);
+    const commandCollected = instance.getPrefixCommands.get(command) || instance.getPrefixCommandsAliases.get(command);
 
     if (commandCollected) {
-      commandCollected.execute(client, null, message, args);
+      commandCollected.execute(client, message, args);
     }
   }
 };
