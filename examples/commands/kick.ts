@@ -3,10 +3,10 @@ import { SlashCommand } from 'seface-kit';
 
 export const command: SlashCommand = {
   name: 'kick',
-  description: 'kick a specifc user',
+  description: 'kick a user',
   options: [
     { name: 'user', description: 'user to be kicked', type: 6, required: true },
-    { name: 'reason', description: 'the reason', type: 3 },
+    { name: 'reason', description: 'reason for the kick', type: 3 },
   ],
   isSlashCommand: true,
   execute: async (client, interaction: CommandInteraction) => {
