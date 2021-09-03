@@ -73,16 +73,16 @@ export class CommandHandler {
    * @param command The command to be registered.
    */
   private async registerSlashCommands(command: SlashCommand) {
-    if (!command.registerOn || command.registerOn.length === 0) {
-      this.dsService.registerCommandGlobally(this.instance.client.user.id, command);
+    if (!command.registerOn) {
+      await this.dsService.registerCommandGlobally(this.instance.client.user.id, command);
       return;
     }
 
-    if(command.registerOn.length > 0) {
-      for (const i in command.registerOn) {
-        this.dsService.registerCommandOnGuild(this.instance.client.user.id, command.registerOn[i], command);
-      }
-    }
+    command.registerOn.forEach(async (guildId) => {
+      if (guildId.length === 0) { return; }
+
+      await this.dsService.registerCommandOnGuild(this.instance.client.user.id, guildId, command);
+    });
   }
 
   /**
