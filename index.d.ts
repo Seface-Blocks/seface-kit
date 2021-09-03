@@ -1,4 +1,3 @@
-import { REST } from '@discordjs/rest';
 import { Client, ClientEvents, Collection } from 'discord.js';
 
 export default class SefaceKit {
@@ -16,9 +15,9 @@ export class Utils {
 }
 
 export class DiscordService {
-  public constructor(rest: REST, collection: Collection<string, SlashCommand>);
-  public async registerCommandGlobally(clientId: string, command: SlashCommand): Promise<void>;
-  public async registerCommandOnGuild(clientId: string, guildId: string, command: SlashCommand): Promise<void>;
+  public constructor(client: Client);
+  public async postSlashCommandGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>;
+  public async postSlashCommandGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>
 }
 
 export class SefaceKitEvents {
@@ -71,13 +70,15 @@ export interface CommandBase {
 export interface SlashCommandOptions {
   name: string;
   description: string;
-  type: number;
   required?: boolean;
+
+  /** Type definitions can be found [here](https://bit.ly/3n117So) */
+  type: number;
 }
 
 export interface SlashCommand extends CommandBase {
   options?: SlashCommandOptions[];
-  registerOn?: string[];
+  register?: string[] | 'GLOBALLY';
   execute?: SlashCommandExecutor;
 }
 

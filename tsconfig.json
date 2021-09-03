@@ -10,6 +10,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./build",
+    "isolatedModules": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

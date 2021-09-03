@@ -2,12 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { Collection } from 'discord.js';
 import SefaceKit from '..';
-
 import Utils from '@utils/Utils';
 import { PrefixCommand, SlashCommand } from '@interfaces/Command';
-
-import { REST } from '@discordjs/rest';
-import { DiscordService } from '../services/Discord.service';
+import { DiscordService } from '../service/DiscordService';
 
 export class CommandHandler {
   private instance: SefaceKit;
@@ -15,8 +12,7 @@ export class CommandHandler {
   private prefixCommandsAliasesCollection: Collection<string, PrefixCommand>;
   private slashCommandsCollection: Collection<string, SlashCommand>;
 
-  private rest: REST;
-  private dsService: DiscordService;
+  private discordService: DiscordService;
 
   constructor(
     directory: string,
@@ -30,17 +26,11 @@ export class CommandHandler {
     this.prefixCommandsCollection = prefixCommandsCollection;
     this.prefixCommandsAliasesCollection = prefixCommandsAliasesCollection;
     this.slashCommandsCollection = slashCommandsCollection;
-
-    this.rest = new REST({ version: '9' }).setToken(this.instance.client.token);
-    this.dsService = new DiscordService(this.rest, this.slashCommandsCollection);
+    this.discordService = new DiscordService(this.instance.client);
 
     this.readCommandsDir(directory);
   }
 
-  /**
-   * Read all commands from the given directory.
-   * @param directory The directory where the commands are.
-   */
   private readCommandsDir(directory: string) {
     const commandsDir = path.join(require.main.path, directory);
 
@@ -68,35 +58,25 @@ export class CommandHandler {
     });
   }
 
-  /**
-   * Register a new Slash Command.
-   * @param command The command to be registered.
-   */
   private async registerSlashCommands(command: SlashCommand) {
-    if (!command.registerOn) {
-      await this.dsService.registerCommandGlobally(this.instance.client.user.id, command);
-      return;
+    if(typeof command.register === 'string') {
+      return await this.discordService.postSlashCommandGlobally(command, this.slashCommandsCollection);
     }
 
-    command.registerOn.forEach(async (guildId) => {
-      if (guildId.length === 0) { return; }
-
-      await this.dsService.registerCommandOnGuild(this.instance.client.user.id, guildId, command);
-    });
+    if(typeof command.register === 'object') {
+      command.register.forEach(async (guildId) => {
+        if(guildId.length === 0) { return; }
+        
+        await this.discordService.postSlashCommandGuild(guildId, command, this.slashCommandsCollection);
+        return;
+      });
+    }
   }
 
-  /**
-   * Register a new Prefix Command.
-   * @param command The command to be registered.
-   */
   private registerPrefixCommands(command: PrefixCommand) {
     this.prefixCommandsCollection.set(command.name, command);
   }
 
-  /**
-   * Register a new Prefix Command Alias.
-   * @param command The command to be registered.
-   */
   private registerPrefixCommandAliases(command: PrefixCommand) {
     if (command.aliases !== undefined) {
       if (command.aliases.length !== 0) {

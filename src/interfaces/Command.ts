@@ -17,13 +17,13 @@ interface CommandBase {
 interface SlashCommandOptions {
   name: string;
   description: string;
-  type: number;
   required?: boolean;
+  type: number;
 }
 
 export interface SlashCommand extends CommandBase {
   options?: SlashCommandOptions[];
-  registerOn?: string[];
+  register?: string[] | 'GLOBALLY'
   execute?: SlashCommandExecutor;
 }
 
