@@ -22,8 +22,14 @@ English | [Portuguese](./.github/README.pt_BR.md)
 ### Installing
 Once your project meets the requirements, run the command below in the project terminal to install the package.
 
+**Using yarn**
 ```sh
-yarn add seface-kit or npm install seface-kit
+yarn add seface-kit
+```
+
+**Using npm**
+```sh
+npm install seface-kit
 ```
 
 ## Adding to your project
