@@ -3,7 +3,6 @@
 English | [Portuguese](./.github/README.pt_BR.md)
 
 ---
-<br/>
 
 **Seface Kit** is a Command and Event Handler for [discord.js v13](https://github.com/discordjs/discord.js/releases/tag/13.0.0). Let Seface Kit do the heavy lifting of recording your commands and events, keeping your project clean and organized!
 
