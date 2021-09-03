@@ -36,7 +36,7 @@ export class DiscordService {
    * @param guildId The guild id to register the command on.
    * @param command The command to be registered.
    */
-  public async registerCommandOnGuilds(clientId: string, guildId: string, command: SlashCommand): Promise<void> {
+  public async registerCommandOnGuild(clientId: string, guildId: string, command: SlashCommand): Promise<void> {
     this.slashCommandCollection.set(command.name, command);
 
     try {

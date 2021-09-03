@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, Guild, Message } from 'discord.js';
+import { Client, CommandInteraction, Message } from 'discord.js';
 
 interface PrefixCommandExecutor {
   (client: Client, message: Message, args: string[]): Promise<void>;

@@ -11,8 +11,8 @@ import { DiscordService } from '../services/Discord.service';
 
 export class CommandHandler {
   private instance: SefaceKit;
-  private commandsCollection: Collection<string, PrefixCommand>;
-  private commandsAliasesCollection: Collection<string, PrefixCommand>;
+  private prefixCommandsCollection: Collection<string, PrefixCommand>;
+  private prefixCommandsAliasesCollection: Collection<string, PrefixCommand>;
   private slashCommandsCollection: Collection<string, SlashCommand>;
 
   private rest: REST;
@@ -20,15 +20,15 @@ export class CommandHandler {
 
   constructor(
     directory: string,
-    commandsCollection: Collection<string, PrefixCommand>,
-    commandsAliasesCollection: Collection<string, PrefixCommand>,
+    prefixCommandsCollection: Collection<string, PrefixCommand>,
+    prefixCommandsAliasesCollection: Collection<string, PrefixCommand>,
     slashCommandsCollection: Collection<string, SlashCommand>,
     instance: SefaceKit
   ) {
 
     this.instance = instance;
-    this.commandsCollection = commandsCollection;
-    this.commandsAliasesCollection = commandsAliasesCollection;
+    this.prefixCommandsCollection = prefixCommandsCollection;
+    this.prefixCommandsAliasesCollection = prefixCommandsAliasesCollection;
     this.slashCommandsCollection = slashCommandsCollection;
 
     this.rest = new REST({ version: '9' }).setToken(this.instance.client.token);
@@ -80,7 +80,7 @@ export class CommandHandler {
 
     if(command.registerOn.length > 0) {
       for (const i in command.registerOn) {
-        this.dsService.registerCommandOnGuilds(this.instance.client.user.id, command.registerOn[i], command);
+        this.dsService.registerCommandOnGuild(this.instance.client.user.id, command.registerOn[i], command);
       }
     }
   }
@@ -90,7 +90,7 @@ export class CommandHandler {
    * @param command The command to be registered.
    */
   private registerPrefixCommands(command: PrefixCommand) {
-    this.commandsCollection.set(command.name, command);
+    this.prefixCommandsCollection.set(command.name, command);
   }
 
   /**
@@ -103,7 +103,7 @@ export class CommandHandler {
         command.aliases.forEach((alias) => {
           if (alias.length === 0) { return; }
 
-          this.commandsAliasesCollection.set(alias, command);
+          this.prefixCommandsAliasesCollection.set(alias, command);
         });
       }
     }

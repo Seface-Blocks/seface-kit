@@ -1,12 +1,11 @@
 # Folders
+**/.github/
+**/.vscode/
 **/examples/
 **/src/
-**/github/
-**/.vscode/
 
 # Files
-.babelrc.js
-.eslintrc.js
-.gitignore
+**/.*
 tsconfig.json
+yarn.lock
 yarn-error.log

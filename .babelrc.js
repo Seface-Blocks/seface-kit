@@ -17,5 +17,5 @@ module.exports = {
     }]
   ],
 
-  ignore: []
+  ignore: ['./src/interfaces']
 };
