@@ -2,12 +2,21 @@
   "name": "seface-kit",
   "description": "Seface Kit is a Command and Event Handler for discord.js v13.",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Leonardo Luiz Gava <llgavamt@gmail.com>",
   "main": "./build/index.js",
   "types": "./index.d.ts",
   "keywords": ["discordjs", "command-handler", "event-handler", "javascript", "typescript"],
-
+  "bugs": { "url": "https://github.com/Seface-Blocks/seface-kit/issues" },
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Seface-Blocks/seface-kit"
+  },
+  
   "scripts": {
     "build": "clear && babel ./src --extensions \".js,.ts\" --out-dir ./build --copy-files --no-copy-ignored --no-comments",
+    
     "lint": "eslint . --ext .ts",
     "bump": "yarn upgrade --latest"
   },
@@ -33,13 +42,5 @@
     "eslint": "^7.32.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
-  },
-
-  "repository": "https://github.com/Seface-Blocks/seface-kit",
-  "bugs": {
-    "url": "https://github.com/Seface-Blocks/seface-kit/issues"
-  },
-  
-  "author": "llgava <llgavamt@gmail.com>",
-  "license": "MIT"
+  }
 }
