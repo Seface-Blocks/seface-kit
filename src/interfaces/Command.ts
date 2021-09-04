@@ -23,7 +23,7 @@ interface SlashCommandOptions {
 
 export interface SlashCommand extends CommandBase {
   options?: SlashCommandOptions[];
-  guilds?: string[];
+  guilds?: string[] | string;
   execute?: SlashCommandExecutor;
 }
 

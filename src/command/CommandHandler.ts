@@ -58,12 +58,18 @@ export class CommandHandler {
     });
   }
 
-  private registerSlashCommands(command: SlashCommand) {
-    if(!command.guilds) { return; }
+  private async registerSlashCommands(command: SlashCommand) {
+    if (!command.guilds) { return; }
 
-    command.guilds.forEach(async (guildId) => {
-      await this.discordService.registerGuild(guildId, command, this.slashCommandsCollection);
-    });
+    if (typeof command.guilds === 'string') {
+      await this.discordService.registerGuild(command.guilds, command, this.slashCommandsCollection);
+    }
+
+    if (typeof command.guilds === 'object') {
+      command.guilds.forEach(async (guildId) => {
+        await this.discordService.registerGuild(guildId, command, this.slashCommandsCollection);
+      });
+    }
   }
 
   private registerPrefixCommandAliases(command: PrefixCommand) {
