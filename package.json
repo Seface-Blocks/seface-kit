@@ -17,8 +17,8 @@
   "scripts": {
     "build": "clear && babel ./src --extensions \".js,.ts\" --out-dir ./build --copy-files --no-copy-ignored --no-comments",
     
-    "lint": "eslint . --ext .ts",
-    "bump": "yarn upgrade --latest"
+    "lint": "clear && eslint . --ext .ts",
+    "bump": "clear && yarn upgrade --latest"
   },
 
   "dependencies": {
