@@ -1,21 +1,14 @@
 import fs from 'fs';
 import path from 'path';
-import { Collection } from 'discord.js';
-
 import SefaceKit from '..';
-import Utils from '../utils/Utils';
-import { Event } from '../interfaces/Event';
+import SefaceKitUtils from '@utils/SefaceKitUtils';
+import { Collection } from 'discord.js';
+import { Event } from '@interfaces/Event';
 
-/** An EventHandler to read and register all events in the project. */
 export class SefaceKitEvents {
   private instance: SefaceKit;
   private _sefaceKitEventsCollection: Collection<string, Event>;
 
-  /**
-   * @param directory The directory where the events are.
-   * @param collection The collection where the events will be registered.
-   * @param instance The instance of the SefaceKit.
-   */
   constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit) {
     this.instance = instance;
     this._sefaceKitEventsCollection = collection;
@@ -23,10 +16,6 @@ export class SefaceKitEvents {
     this.readSefaceKitEvents(directory);
   }
 
-  /**
-   * Reads all Seface Kit events in the directory and registers them.
-   * @param directory The directory where the events are.
-   */
   private readSefaceKitEvents(directory: string) {
     const eventsDir = path.join(__dirname, '..', directory);
 
@@ -39,7 +28,7 @@ export class SefaceKitEvents {
       if (dirStat.isDirectory()) { return this.readSefaceKitEvents(eventsSubdir); }
 
       // Check the file extension.
-      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
+      if (!SefaceKitUtils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { moduleEvent }: { moduleEvent: Event; } = await import(inEventsDir);
 
@@ -48,10 +37,6 @@ export class SefaceKitEvents {
     });
   }
 
-  /**
-   * Register a new Seface Kit event.
-   * @param event The Seface Kit event to be registered.
-   */
   private registerSefaceKitEvent(event: Event) {
     this._sefaceKitEventsCollection.set(event.name, event);
   }

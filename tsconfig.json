@@ -8,7 +8,6 @@
     "resolveJsonModule": true,
     "target": "es2017",
     "module": "commonjs",
-    "rootDir": "./src",
     "outDir": "./build",
     "isolatedModules": false,
     "esModuleInterop": true,
@@ -16,11 +15,14 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "@command/*": ["./src/command/*"],
+      "@event/*": ["./src/event/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
       "@interfaces/*": ["./src/interfaces/*"],
-      "@utils/*": ["./src/utils/*"]
     }
   },
 
-  "include": [ "./src/**/*.ts", "index.d.ts"],
+  "include": ["./src/**/*.ts"],
   "exclude": [ ]
 }

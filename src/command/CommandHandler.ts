@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import { Collection } from 'discord.js';
 import SefaceKit from '..';
-import Utils from '@utils/Utils';
+import SefaceKitUtils from '@utils/SefaceKitUtils';
+import { Collection } from 'discord.js';
+import { DiscordService } from '@services/DiscordService';
 import { PrefixCommand, SlashCommand } from '@interfaces/Command';
-import { DiscordService } from '../service/DiscordService';
 
 export class CommandHandler {
   private instance: SefaceKit;
@@ -43,7 +43,7 @@ export class CommandHandler {
       if (dirStat.isDirectory()) { return this.readCommandsDir(commandsSubdir); }
 
       // Check the file extension.
-      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
+      if (!SefaceKitUtils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { command }: { command: SlashCommand & PrefixCommand; } = require(inCommandsDir);
 

@@ -1,10 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { Collection } from 'discord.js';
-
 import SefaceKit from '..';
-import Utils from '../utils/Utils';
-import { Event } from '../interfaces/Event';
+import SefaceKitUtils from '@utils/SefaceKitUtils';
+import { Collection } from 'discord.js';
+import { Event } from '@interfaces/Event';
 
 export class EventHandler {
   private instance: SefaceKit;
@@ -17,10 +16,6 @@ export class EventHandler {
     this.readEventsDir(directory);
   }
 
-  /**
-   * Reads all events in the directory and registers them.
-   * @param directory The directory where the events are.
-   */
   private readEventsDir(directory: string) {
     const eventsDir = path.join(require.main.path, directory);
 
@@ -33,7 +28,7 @@ export class EventHandler {
       if (dirStat.isDirectory()) { return this.readEventsDir(eventsSubdir); }
 
       // Check the file extension.
-      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
+      if (!SefaceKitUtils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { event }: { event: Event; } = await import(inEventsDir);
 
@@ -42,10 +37,6 @@ export class EventHandler {
     });
   }
 
-  /**
-   * Register a new Event.
-   * @param event The event to be registered.
-   */
   private registerEvent(event: Event) {
     this._eventsCollection.set(event.name, event);
   }
