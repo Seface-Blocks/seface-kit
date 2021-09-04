@@ -12,7 +12,7 @@ export class DiscordService {
     this.rest = this.rest = new REST({ version: '9' }).setToken(this.client.token);
   }
 
-  public async postSlashCommandGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
+  public async registerGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
     collection.set(command.name, command);
 
     try {
@@ -23,7 +23,7 @@ export class DiscordService {
     } catch (err) { console.error(err); }
   }
 
-  public async postSlashCommandGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
+  public async registerGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
     collection.set(command.name, command);
 
     try {

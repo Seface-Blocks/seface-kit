@@ -78,7 +78,7 @@ export interface SlashCommandOptions {
 
 export interface SlashCommand extends CommandBase {
   options?: SlashCommandOptions[];
-  register?: string[] | 'GLOBALLY';
+  guilds?: string[];
   execute?: SlashCommandExecutor;
 }
 

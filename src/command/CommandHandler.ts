@@ -34,7 +34,7 @@ export class CommandHandler {
   private readCommandsDir(directory: string) {
     const commandsDir = path.join(require.main.path, directory);
 
-    fs.readdirSync(commandsDir).forEach((fileOrDir) => {
+    fs.readdirSync(commandsDir).forEach(async (fileOrDir) => {
       const inCommandsDir = path.join(require.main.path, directory, fileOrDir);
       const commandsSubdir = path.join(directory, fileOrDir);
       const dirStat = fs.lstatSync(inCommandsDir);
@@ -53,28 +53,17 @@ export class CommandHandler {
         return;
       }
 
-      this.registerPrefixCommands(command);
       this.registerPrefixCommandAliases(command);
+      this.prefixCommandsCollection.set(command.name, command); // Register Prefix Commands
     });
   }
 
-  private async registerSlashCommands(command: SlashCommand) {
-    if(typeof command.register === 'string') {
-      return await this.discordService.postSlashCommandGlobally(command, this.slashCommandsCollection);
-    }
+  private registerSlashCommands(command: SlashCommand) {
+    if(!command.guilds) { return; }
 
-    if(typeof command.register === 'object') {
-      command.register.forEach(async (guildId) => {
-        if(guildId.length === 0) { return; }
-        
-        await this.discordService.postSlashCommandGuild(guildId, command, this.slashCommandsCollection);
-        return;
-      });
-    }
-  }
-
-  private registerPrefixCommands(command: PrefixCommand) {
-    this.prefixCommandsCollection.set(command.name, command);
+    command.guilds.forEach(async (guildId) => {
+      await this.discordService.registerGuild(guildId, command, this.slashCommandsCollection);
+    });
   }
 
   private registerPrefixCommandAliases(command: PrefixCommand) {
