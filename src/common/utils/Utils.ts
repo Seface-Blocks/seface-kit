@@ -1,4 +1,4 @@
-class SefaceKitUtils {
+class Utils {
   
   public checkFileExtension(file: string, extensions: string[]): boolean {
     if(extensions.includes(file.substr(file.lastIndexOf('.')))) {
@@ -9,4 +9,4 @@ class SefaceKitUtils {
   }
 }
 
-export default new SefaceKitUtils();
+export default new Utils();

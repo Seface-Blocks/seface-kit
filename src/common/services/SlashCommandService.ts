@@ -1,9 +1,9 @@
 import { Client, Collection } from 'discord.js';
-import { SlashCommand } from 'seface-kit';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import { SlashCommand } from '@interfaces/Command';
 
-export class DiscordService {
+export class SlashCommandService {
   private rest: REST;
   private client: Client;
 
@@ -12,7 +12,8 @@ export class DiscordService {
     this.rest = this.rest = new REST({ version: '9' }).setToken(this.client.token);
   }
 
-  public async registerGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
+  /** Registers the current command for all servers the bot is on. */
+  public async addGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
     collection.set(command.name, command);
 
     try {
@@ -23,7 +24,8 @@ export class DiscordService {
     } catch (err) { console.error(err); }
   }
 
-  public async registerGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
+  /** Registers the current command for a specific server. */
+  public async addOnGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void> {
     collection.set(command.name, command);
 
     try {

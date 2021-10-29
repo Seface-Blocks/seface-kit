@@ -6,41 +6,44 @@
   "author": "Leonardo Luiz Gava <llgavamt@gmail.com>",
   "main": "./build/index.js",
   "types": "./index.d.ts",
-  "keywords": ["discordjs", "command-handler", "event-handler", "javascript", "typescript"],
-  "bugs": { "url": "https://github.com/Seface-Blocks/seface-kit/issues" },
-  
+  "keywords": [
+    "discordjs",
+    "command-handler",
+    "event-handler",
+    "javascript",
+    "typescript"
+  ],
+  "bugs": {
+    "url": "https://github.com/Seface-Blocks/seface-kit/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Seface-Blocks/seface-kit"
   },
-  
   "scripts": {
     "build": "clear && babel ./src --extensions \".js,.ts\" --out-dir ./build --copy-files --no-copy-ignored --no-comments",
-    
     "lint": "clear && eslint . --ext .ts",
     "bump": "clear && yarn upgrade --latest"
   },
-
   "dependencies": {
-    "@discordjs/builders": "^0.6.0",
+    "@discordjs/builders": "^0.8.1",
     "@discordjs/rest": "^0.1.0-canary.0",
     "chalk": "^4.1.1",
-    "discord-api-types": "^0.22.0",
-    "discord.js": "^13.1.0"
+    "discord-api-types": "^0.24.0",
+    "discord.js": "^13.3.0"
   },
-
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.15.0",
-    "@babel/node": "^7.14.9",
-    "@babel/preset-env": "^7.15.0",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
     "@babel/preset-typescript": "^7.15.0",
-    "@types/node": "^16.7.5",
-    "@typescript-eslint/eslint-plugin": "^4.29.3",
-    "@typescript-eslint/parser": "^4.29.3",
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.1.0",
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.4"
   }
 }

@@ -15,11 +15,10 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@command/*": ["./src/command/*"],
-      "@event/*": ["./src/event/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@services/*": ["./src/services/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
+      "@handlers/*": ["./src/common/handlers/*"],
+      "@utils/*": ["./src/common/utils/*"],
+      "@services/*": ["./src/common/services/*"],
+      "@interfaces/*": ["./src/common/interfaces/*"],
     }
   },
 

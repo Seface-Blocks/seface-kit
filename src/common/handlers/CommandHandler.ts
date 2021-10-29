@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import SefaceKit from '..';
-import SefaceKitUtils from '@utils/SefaceKitUtils';
+import SefaceKit from '../..';
 import { Collection } from 'discord.js';
-import { DiscordService } from '@services/DiscordService';
 import { PrefixCommand, SlashCommand } from '@interfaces/Command';
+import Utils from '@utils/Utils';
+import { SlashCommandService } from '@services/SlashCommandService';
 
 export class CommandHandler {
   private instance: SefaceKit;
@@ -12,7 +12,7 @@ export class CommandHandler {
   private prefixCommandsAliasesCollection: Collection<string, PrefixCommand>;
   private slashCommandsCollection: Collection<string, SlashCommand>;
 
-  private discordService: DiscordService;
+  private slashCommandService: SlashCommandService;
 
   constructor(
     directory: string,
@@ -26,31 +26,27 @@ export class CommandHandler {
     this.prefixCommandsCollection = prefixCommandsCollection;
     this.prefixCommandsAliasesCollection = prefixCommandsAliasesCollection;
     this.slashCommandsCollection = slashCommandsCollection;
-    this.discordService = new DiscordService(this.instance.client);
+    this.slashCommandService = new SlashCommandService(this.instance.getClient);
 
-    this.readCommandsDir(directory);
+    this.readCommands(directory);
   }
 
-  private readCommandsDir(directory: string) {
-    const commandsDir = path.join(require.main.path, directory);
+  /** Read all command fro a specific directory. */
+  private readCommands(directory: string) {
+    const dir = path.join(require.main.path, directory);
 
-    fs.readdirSync(commandsDir).forEach(async (fileOrDir) => {
+    fs.readdirSync(dir).forEach(async (fileOrDir) => {
       const inCommandsDir = path.join(require.main.path, directory, fileOrDir);
-      const commandsSubdir = path.join(directory, fileOrDir);
+      const subdir = path.join(directory, fileOrDir);
       const dirStat = fs.lstatSync(inCommandsDir);
 
-      // Loop this function while it's a directory.
-      if (dirStat.isDirectory()) { return this.readCommandsDir(commandsSubdir); }
-
-      // Check the file extension.
-      if (!SefaceKitUtils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
+      if (dirStat.isDirectory()) { return this.readCommands(subdir); }
+      if (!Utils.checkFileExtension(fileOrDir, ['.ts', '.js'])) { return; }
 
       const { command }: { command: SlashCommand & PrefixCommand; } = require(inCommandsDir);
 
-      // Check if the command is a SlashCommand.
       if (command.isSlashCommand) {
-        this.registerSlashCommands(command);
-        return;
+        return this.registerSlashCommand(command);
       }
 
       this.registerPrefixCommandAliases(command);
@@ -58,21 +54,23 @@ export class CommandHandler {
     });
   }
 
-  private async registerSlashCommands(command: SlashCommand) {
+  /** Register all slash commands. */
+  private async registerSlashCommand(command: SlashCommand): Promise<void> {
     if (!command.guilds) { return; }
 
     if (typeof command.guilds === 'string') {
-      await this.discordService.registerGuild(command.guilds, command, this.slashCommandsCollection);
+      await this.slashCommandService.addOnGuild(command.guilds, command, this.slashCommandsCollection);
     }
 
     if (typeof command.guilds === 'object') {
       command.guilds.forEach(async (guildId) => {
-        await this.discordService.registerGuild(guildId, command, this.slashCommandsCollection);
+        await this.slashCommandService.addOnGuild(guildId, command, this.slashCommandsCollection);
       });
     }
   }
 
-  private registerPrefixCommandAliases(command: PrefixCommand) {
+  /** Register all prefix commands aliases. */
+  private registerPrefixCommandAliases(command: PrefixCommand): void {
     if (command.aliases !== undefined) {
       if (command.aliases.length !== 0) {
         command.aliases.forEach((alias) => {

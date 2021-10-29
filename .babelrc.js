@@ -11,14 +11,13 @@ module.exports = {
     ['module-resolver', {
       root: ['./src'],
       alias: {
-        "@command": './src/command',
-        "@event": './src/event',
-        "@utils": './src/utils',
-        "@services": './src/services',
-        '@interfaces': './src/interfaces'
+        "@handlers": './src/common/handlers',
+        "@utils": './src/common/utils',
+        "@services": './src/common/services',
+        '@interfaces': './src/common/interfaces'
       }
     }]
   ],
 
-  ignore: ['./src/interfaces']
+  ignore: ['./src/common/interfaces']
 };

@@ -17,7 +17,7 @@
 ## Instalação
 ### Requerimentos
   * [Node.js](https://nodejs.org/en/) 16.6.0 ou superior;
-  * [discord.js](https://discord.js.org/) 13.0.0 ou superior;
+  * [discord.js](https://discord.js.org/) 13.3.0 ou superior;
 
 ### Instalando
 Depois que seu projeto atender aos requisitos, execute o comando abaixo no terminal do projeto para instalar o pacote.

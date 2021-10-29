@@ -1,7 +1,12 @@
+/*
+  This file is an event that is automatically
+  registered by the configured client.
+*/
+
 import { Message } from 'discord.js';
 import { Event } from '@interfaces/Event';
 
-export const moduleEvent: Event = {
+export const event: Event = {
   name: 'messageCreate',
   execute: async (client, instance, message: Message) => {
     const { author, channel, content } = message;

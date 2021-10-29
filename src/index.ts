@@ -3,34 +3,33 @@ import { Client, Collection } from 'discord.js';
 import { Event } from '@interfaces/Event';
 import { SefaceKitOptions } from '@interfaces/SefaceKit';
 import { PrefixCommand, SlashCommand } from '@interfaces/Command';
-import { CommandHandler } from '@command/CommandHandler';
-import { EventHandler } from '@event/EventHandler';
-import { SefaceKitEvents } from '@event/SefaceKitEvents';
+import { CommandHandler } from '@handlers/CommandHandler';
+import { EventHandler } from '@handlers/EventHandler';
+import { ClientHandler } from '@handlers/ClientHandler';
 
 export default class SefaceKit {
-  private _client: Client;
-  private _options: SefaceKitOptions;
-
-  private _prefixCommands: Collection<string, PrefixCommand> = new Collection();
-  private _prefixCommandsAliases: Collection<string, PrefixCommand> = new Collection();
-  private _slashCommands: Collection<string, SlashCommand> = new Collection();
-  private _events: Collection<string, Event> = new Collection();
+  private client: Client;
+  private options: SefaceKitOptions;
+  private prefixCommands: Collection<string, PrefixCommand> = new Collection();
+  private prefixCommandsAliases: Collection<string, PrefixCommand> = new Collection();
+  private slashCommands: Collection<string, SlashCommand> = new Collection();
+  private events: Collection<string, Event> = new Collection();
 
   constructor(client: Client, options: SefaceKitOptions) {
-    this._client = client;
-    this._options = options;
+    this.client = client;
+    this.options = options;
 
-    new CommandHandler(this._options.commandsIn, this._prefixCommands, this._prefixCommandsAliases, this._slashCommands, this);
-    new EventHandler(this._options.eventsIn, this._events, this);
-    new SefaceKitEvents('event/defaults', this._events, this);
+    new CommandHandler(this.options.commandsIn, this.prefixCommands, this.prefixCommandsAliases, this.slashCommands, this);
+    new EventHandler(this.options.eventsIn, this.events, this);
+    new ClientHandler('client/events', this.events, this);
   }
 
-  public get client(): Client { return this._client; }
-  public get options(): SefaceKitOptions { return this._options; }
+  public get getClient(): Client { return this.client; }
+  public get getOptions(): SefaceKitOptions { return this.options; }
 
-  public get getPrefixCommands(): Collection<string, PrefixCommand> { return this._prefixCommands; }
-  public get getPrefixCommandsAliases(): Collection<string, PrefixCommand> { return this._prefixCommandsAliases; }
-  public get getSlashCommands(): Collection<string, SlashCommand> { return this._slashCommands; }
+  public get getPrefixCommands(): Collection<string, PrefixCommand> { return this.prefixCommands; }
+  public get getPrefixCommandsAliases(): Collection<string, PrefixCommand> { return this.prefixCommandsAliases; }
+  public get getSlashCommands(): Collection<string, SlashCommand> { return this.slashCommands; }
 
-  public get getEvents(): Collection<string, Event> { return this._events; }
+  public get getEvents(): Collection<string, Event> { return this.events; }
 }

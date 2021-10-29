@@ -16,7 +16,7 @@ English | [Portuguese](./.github/README.pt_BR.md)
 ## Instalations
 ### Requirements
   * [Node.js](https://nodejs.org/en/) 16.6.0 or newer;
-  * [discord.js](https://discord.js.org/) 13.0.0 or newer;
+  * [discord.js](https://discord.js.org/) 13.3.0 or newer;
 
 ### Installing
 Once your project meets the requirements, run the command below in the project terminal to install the package.

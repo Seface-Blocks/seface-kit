@@ -1,26 +1,26 @@
-import { Client, ClientEvents, Collection } from 'discord.js';
+import { Client, ClientEvents, Collection, CommandInteraction, Message } from 'discord.js';
 
 export default class SefaceKit {
   public constructor(client: Client, options: SefaceKitOptions);
-  public get client(): Client;
-  public get options(): SefaceKitOptions;
+  public get getClient(): Client;
+  public get getOptions(): SefaceKitOptions;
   public getPrefixCommands(): Collection<string, PrefixCommand>;
   public getPrefixCommandsAliases(): Collection<string, PrefixCommand>;
   public getSlashCommands(): Collection<string, SlashCommand>;
-  public getEvents(): Collection<string, PrefixCommand>;
+  public getEvents(): Collection<string, Event>;
 }
 
-export class Utils {
-  public checkFileExtension(file: string, extension: string[]): boolean;
-}
 
-export class DiscordService {
+
+// SERVICES
+export class SlashCommandService {
   public constructor(client: Client);
-  public async postSlashCommandGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>;
-  public async postSlashCommandGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>
+  public addGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>;
+  public addOnGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>
 }
 
-export class SefaceKitEvents {
+// HANDLERS
+export class ClientHandler {
   public constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit);
 }
 
@@ -37,6 +37,12 @@ export class CommandHandler {
     instance: SefaceKit);
 }
 
+// OTHERS
+export class Utils {
+  public checkFileExtension(file: string, extension: string[]): boolean;
+}
+
+// INTERFACES AND TYPES
 export interface SefaceKitOptions {
   commandsIn: string;
   eventsIn: string;

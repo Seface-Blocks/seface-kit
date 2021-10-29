@@ -1,6 +1,11 @@
+/*
+  This file is an event that is automatically
+  registered by the configured client.
+*/
+
 import { Event } from '@interfaces/Event';
 
-export const moduleEvent: Event = {
+export const event: Event = {
   name: 'interactionCreate',
   execute: async (client, instance, interaction) => {
     if (!interaction.isCommand()) { return; }
