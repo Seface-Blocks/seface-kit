@@ -13,6 +13,7 @@ module.exports = {
       alias: {
         "@handlers": './src/common/handlers',
         "@utils": './src/common/utils',
+        "@client": './src/client',
         "@services": './src/common/services',
         '@interfaces': './src/common/interfaces'
       }
