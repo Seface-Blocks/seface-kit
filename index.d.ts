@@ -1,39 +1,38 @@
-import { Client, ClientEvents, Collection, CommandInteraction, Message } from 'discord.js';
+import Discord from 'discord.js';
 
+// COMMON
 export default class SefaceKit {
-  public constructor(client: Client, options: SefaceKitOptions);
-  public get getClient(): Client;
+  public constructor(client: Discord.Client, options: SefaceKitOptions);
+  public get getClient(): Discord.Client;
   public get getOptions(): SefaceKitOptions;
-  public getPrefixCommands(): Collection<string, PrefixCommand>;
-  public getPrefixCommandsAliases(): Collection<string, PrefixCommand>;
-  public getSlashCommands(): Collection<string, SlashCommand>;
-  public getEvents(): Collection<string, Event>;
+  public get getPrefixCommands(): Discord.Collection<string, PrefixCommand>;
+  public get getPrefixCommandsAliases(): Discord.Collection<string, PrefixCommand>;
+  public get getSlashCommands(): Discord.Collection<string, SlashCommand>;
+  public get getEvents(): Discord.Collection<string, Event>;
 }
-
-
 
 // SERVICES
 export class SlashCommandService {
-  public constructor(client: Client);
-  public addGlobally(command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>;
-  public addOnGuild(guildId: string, command: SlashCommand, collection: Collection<string, SlashCommand>): Promise<void>
+  public constructor(client: Discord.Client);
+  public addGlobally(command: SlashCommand, collection: Discord.Collection<string, SlashCommand>): Promise<void>;
+  public addOnGuild(guildId: string, command: SlashCommand, collection: Discord.Collection<string, SlashCommand>): Promise<void>
 }
 
 // HANDLERS
 export class ClientHandler {
-  public constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit);
+  public constructor(directory: string, collection: Discord.Collection<string, Event>, instance: SefaceKit);
 }
 
 export class EventHandler {
-  public constructor(directory: string, collection: Collection<string, Event>, instance: SefaceKit);
+  public constructor(directory: string, collection: Discord.Collection<string, Event>, instance: SefaceKit);
 }
 
 export class CommandHandler {
   public constructor(
     directory: string,
-    prefixCommandsCollection: Collection<string, PrefixCommand>,
-    prefixCommandsAliasesCollection: Collection<string, PrefixCommand>,
-    slashCommandsCollection: Collection<string, SlashCommand>,
+    prefixCommandsCollection: Discord.Collection<string, PrefixCommand>,
+    prefixCommandsAliasesCollection: Discord.Collection<string, PrefixCommand>,
+    slashCommandsCollection: Discord.Collection<string, SlashCommand>,
     instance: SefaceKit);
 }
 
@@ -51,20 +50,20 @@ export interface SefaceKitOptions {
 }
 
 export interface EventExecutor {
-  (client: Client, instance: SefaceKit, ...args: any[]): Promise<void>;
+  (client: Discord.Client, instance: SefaceKit, ...args: any[]): Promise<void>;
 }
 
 export interface Event {
-  name: keyof ClientEvents | string;
+  name: keyof Discord.ClientEvents | string;
   execute: EventExecutor;
 }
 
 interface PrefixCommandExecutor {
-  (client: Client, message: Message, args: string[]): Promise<void>;
+  (client: Discord.Client, message: Discord.Message, args: string[]): Promise<void>;
 }
 
 interface SlashCommandExecutor {
-  (client: Client, interaction: CommandInteraction): Promise<void>;
+  (client: Discord.Client, interaction: Discord.CommandInteraction): Promise<void>;
 }
 
 export interface CommandBase {
