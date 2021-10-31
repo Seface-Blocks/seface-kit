@@ -15,7 +15,10 @@ module.exports = {
         "@utils": './src/common/utils',
         "@client": './src/client',
         "@services": './src/common/services',
-        '@interfaces': './src/common/interfaces'
+        "@interfaces": './src/common/interfaces',
+        
+        // Configs
+        "@config/messages": './src/messages.json'
       }
     }]
   ],

@@ -15,6 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "@config/*": ["./src/*.json"],
       "@handlers/*": ["./src/common/handlers/*"],
       "@utils/*": ["./src/common/utils/*"],
       "@client/*": ["./src/client/*"],
@@ -23,6 +24,6 @@
     }
   },
 
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "src/client/Category.ts"],
   "exclude": [ ]
 }

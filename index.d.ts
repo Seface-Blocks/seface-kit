@@ -1,5 +1,35 @@
 import Discord from 'discord.js';
 
+// CLIENT
+export class SefaceClient {
+  public guild: Guild;
+  public constructor(client: Discord.Client);
+}
+
+export class Guild {
+  public category: Category;
+  public channel: Channel;
+  public role: Role;
+  public getGuildByName(name: string): Promise<Discord.Guild>;
+  public getGuildById(id: string): Promise<Discord.Guild>;
+}
+
+export class Category {
+  public getCategoryByName(name: string, guild: Discord.Guild): Promise<Discord.CategoryChannel>;
+  public getCategoryById(name: string, guild: Discord.Guild): Promise<Discord.CategoryChannel>;
+}
+
+export class Channel {
+  public getTextChannelByName(name: string, guild: Discord.Guild): Promise<Discord.TextChannel>;
+  public getTextChannelById(id: string, guild: Discord.Guild): Promise<Discord.TextChannel>;
+}
+
+export class Role {
+  public getEveryone(guild: Discord.Guild): Promise<Discord.Role>;
+  public getRoleByName(name: string, guild: Discord.Guild): Promise<Discord.Role>;
+  public getRoleById(name: string, guild: Discord.Guild): Promise<Discord.Role>;
+}
+
 // COMMON
 export default class SefaceKit {
   public constructor(client: Discord.Client, options: SefaceKitOptions);
@@ -9,6 +39,7 @@ export default class SefaceKit {
   public get getPrefixCommandsAliases(): Discord.Collection<string, PrefixCommand>;
   public get getSlashCommands(): Discord.Collection<string, SlashCommand>;
   public get getEvents(): Discord.Collection<string, Event>;
+  public get utils(): SefaceClient;
 }
 
 // SERVICES
@@ -63,7 +94,7 @@ interface PrefixCommandExecutor {
 }
 
 interface SlashCommandExecutor {
-  (client: Discord.Client, interaction: Discord.CommandInteraction): Promise<void>;
+  (client: Discord.Client, interaction: Discord.CommandInteraction, sender: Discord.GuildMember, instance: SefaceKit): Promise<void>;
 }
 
 export interface CommandBase {

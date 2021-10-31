@@ -1,11 +1,12 @@
-import { Client, CommandInteraction, Message } from 'discord.js';
+import { Client, CommandInteraction, GuildMember, Message } from 'discord.js';
+import SefaceKit from '../..';
 
 interface PrefixCommandExecutor {
   (client: Client, message: Message, args: string[]): Promise<void>;
 }
 
 interface SlashCommandExecutor {
-  (client: Client, interaction: CommandInteraction): Promise<void>;
+  (client: Client, interaction: CommandInteraction, sender: GuildMember, instance: SefaceKit): Promise<void>;
 }
 
 interface CommandBase {

@@ -6,6 +6,7 @@ import { PrefixCommand, SlashCommand } from '@interfaces/Command';
 import { CommandHandler } from '@handlers/CommandHandler';
 import { EventHandler } from '@handlers/EventHandler';
 import { ClientHandler } from '@handlers/ClientHandler';
+import { SefaceClient } from './client/SefaceClient';
 
 export default class SefaceKit {
   private client: Client;
@@ -15,9 +16,12 @@ export default class SefaceKit {
   private slashCommands: Collection<string, SlashCommand> = new Collection();
   private events: Collection<string, Event> = new Collection();
 
+  private sefaceClient: SefaceClient;
+
   constructor(client: Client, options: SefaceKitOptions) {
     this.client = client;
     this.options = options;
+    this.sefaceClient = new SefaceClient(this.client);
 
     new CommandHandler(this.options.commandsIn, this.prefixCommands, this.prefixCommandsAliases, this.slashCommands, this);
     new EventHandler(this.options.eventsIn, this.events, this);
@@ -32,4 +36,6 @@ export default class SefaceKit {
   public get getSlashCommands(): Collection<string, SlashCommand> { return this.slashCommands; }
 
   public get getEvents(): Collection<string, Event> { return this.events; }
+
+  public get utils(): SefaceClient { return this.sefaceClient; }
 }
