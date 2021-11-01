@@ -101,6 +101,7 @@ export interface CommandBase {
   name: string;
   description: string;
   isSlashCommand?: boolean;
+  ignoreRegistered?: boolean;
 }
 
 export interface SlashCommandOptions {
@@ -115,10 +116,10 @@ export interface SlashCommandOptions {
 export interface SlashCommand extends CommandBase {
   options?: SlashCommandOptions[];
   guilds?: string[] | string;
-  execute?: SlashCommandExecutor;
+  execute: SlashCommandExecutor;
 }
 
 export interface PrefixCommand extends CommandBase {
   aliases?: string[];
-  execute?: PrefixCommandExecutor;
+  execute: PrefixCommandExecutor;
 }
