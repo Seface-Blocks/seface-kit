@@ -1,54 +1,53 @@
-## Seface Kit
-### A powerful discord.js Command and Event handler!
-English | [Portuguese](./.github/README.pt_BR.md)
-
+---
+description: A powerful discord.js Command and Event handler!
 ---
 
-**Seface Kit** is a Command and Event Handler for [discord.js v13](https://github.com/discordjs/discord.js/releases/tag/13.0.0). Let Seface Kit do the heavy lifting of recording your commands and events, keeping your project clean and organized!
+# Seface Kit
 
-> **Note:** Seface Kit allows organization by subfolders.
+{% hint style="warning" %}
+Seface Kit is **under development**, it is not recommended to use it for production environments
+{% endhint %}
 
-- [Instalations](#instalations)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-- [Adding to your project](#adding-to-your-project)
+### Adding to your project
 
-## Instalations
-### Requirements
-  * [Node.js](https://nodejs.org/en/) 16.6.0 or newer;
-  * [discord.js](https://discord.js.org/) 13.3.0 or newer;
+Once your project meets the [requirements](https://github.com/Seface-Blocks/seface-kit#requirements), run the command below in the project terminal to install the package.
 
-### Installing
-Once your project meets the requirements, run the command below in the project terminal to install the package.
-
-**Using yarn**
-```sh
-yarn add seface-kit
+```shell
+yarn add seface-kit or npm install seface-kit
 ```
 
-**Using npm**
-```sh
-npm install seface-kit
-```
+After instOnce installed, you need to add SefaceKit inside your bot's 'ready' event.
 
-## Adding to your project
-**JavaScript and TypeScript support!** 🎉
-
-```js
-import { Client, Intents } from 'discord.js';
+{% code title="index.ts" %}
+```javascript
+import * as Discord from 'discord.js';
 import SefaceKit from 'seface-kit';
 
-const bot = new Client({ intents: [Intents.FLAGS.GUILDS] });
+class MyBot {
+  public client: Discord.Client;
+  
+  constructor() {
+    this.client = new Discord.Client({
+      intents: [
+        Discord.Intents.FLAGS.GUILDS,
+        Discord.Intents.FLAGS.GUILD_MESSAGES,
+        Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+      ]
+    });
+    
+    this.client.on('ready', () => {
+      new SefaceKit(this.client, {
+        commandsIn: 'commands', // The folder where the commands should be.
+        eventsIn: 'events',     // The folder where the events should be.
+        prefix: '!',            // The prefix for Prefix Commands.
+        showWarns: false        // Does nothing on SNAPSHOT versions.
+      });
+    });
+    
+    this.client.login('BOT_TOKEN');
+  }
+}
 
-bot.on('ready', () => {
-  new SefaceKit(bot, {
-    commandsIn: 'commands',
-    eventsIn: 'events',
-    showWarns: true,
-    prefix: '!'
-  })
-})
-
-bot.login('BOT_TOKEN');
+export default new MyBot();
 ```
-[Here](./examples) you can found some examples of how to create commands and listen events.
+{% endcode %}
