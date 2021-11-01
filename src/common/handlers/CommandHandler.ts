@@ -49,6 +49,8 @@ export class CommandHandler {
         return this.registerSlashCommand(command);
       }
 
+      if (command.ignoreRegister) { return; }
+
       this.registerPrefixCommandAliases(command);
       this.prefixCommandsCollection.set(command.name, command); // Register Prefix Commands
     });
