@@ -3,8 +3,7 @@ import chalk from 'chalk';
 import Messages from '@config/messages';
 
 export class Category {
-
-  // TEXT CHANNEL
+  
   public async getCategoryByName(name: string, guild: Discord.Guild): Promise<Discord.CategoryChannel> {
     return new Promise<Discord.CategoryChannel>((resolve, reject) => {
       const channel = guild.channels.cache.find(c => c.name === name);

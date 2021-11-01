@@ -16,6 +16,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 12 },
   plugins: ['@typescript-eslint'],
   rules: {
+    'no-async-promise-executor': 'off',
     'linebreak-style': ['error', 'unix'],
     indent: ['error', 2],
     quotes: ['error', 'single'],

@@ -4,12 +4,14 @@ import Messages from '@config/messages';
 import { Category } from '@client/Category';
 import { Channel } from '@client/Channel';
 import { Role } from '@client/Role';
+import { Emoji } from '@client/Emoji';
 
 export class Guild {
   private client: Discord.Client;
   public category: Category = new Category();
   public channel: Channel = new Channel();
   public role: Role = new Role();
+  public emoji: Emoji = new Emoji();
 
   constructor(client: Discord.Client) {
     this.client = client;

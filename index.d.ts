@@ -10,6 +10,7 @@ export class Guild {
   public category: Category;
   public channel: Channel;
   public role: Role;
+  public emoji: Emoji;
   public getGuildByName(name: string): Promise<Discord.Guild>;
   public getGuildById(id: string): Promise<Discord.Guild>;
 }
@@ -22,6 +23,13 @@ export class Category {
 export class Channel {
   public getTextChannelByName(name: string, guild: Discord.Guild): Promise<Discord.TextChannel>;
   public getTextChannelById(id: string, guild: Discord.Guild): Promise<Discord.TextChannel>;
+  public getVoiceChannelByName(name: string, guild: Discord.Guild): Promise<Discord.VoiceChannel>;
+  public getVoiceChannelById(id: string, guild: Discord.Guild): Promise<Discord.VoiceChannel>;
+}
+
+export class Emoji {
+  public getEmojiByName(name: string, guild: Discord.Guild): Promise<Discord.Emoji>;
+  public getEmojiById(id: string, guild: Discord.Guild): Promise<Discord.Emoji>;
 }
 
 export class Role {
