@@ -1,31 +1,34 @@
-import { CommandInteraction, GuildMember, User } from 'discord.js';
 import { SlashCommand } from 'seface-kit';
 
 export const command: SlashCommand = {
   name: 'kick',
-  description: 'Kick a user from the server.',
+  description: 'Kick members from the server.',
   options: [
-    { name: 'user', description: 'User to be kicked.', type: 6, required: true },
-    { name: 'reason', description: 'Reason for the kick.', type: 3 },
+    // Type definitions can be found here: https://bit.ly/3n117So
+    { name: 'user', description: 'User to be kicked', type: 6, required: true },
+    { name: 'reason', description: 'Reason for the kick', type: 3 }
   ],
-  guilds: '910847586061986462',
+  guilds: 'GUILD_ID',
   isSlashCommand: true,
-  execute: async (client, interaction: CommandInteraction) => {
-    const optUser: User = interaction.options.getUser('user');
-    const optReason: string = interaction.options.getString('reason');
 
-    const sender: GuildMember = interaction.guild.members.cache.get(interaction.user.id);
-    const user: GuildMember = interaction.guild.members.cache.get(optUser.id);
+  execute: async (client, interaction, sender, instance) => {
+    const guild = await instance.utils.guild.getGuildByName('GUILD_ID');
 
-    if (sender.permissions.has('KICK_MEMBERS')) {
-      if (!user.kickable) {
-        return interaction.reply(`You cannot kick the user ${user.displayName}`);
-      }
+    // Fetch Options Values
+    const user = interaction.options.getUser('user'); // Need convert the User to GuildMember type.
+    const reason = interaction.options.getString('reason');
 
-      user.kick(optReason);
-      interaction.reply(`User ${user.displayName} has been kicked.`);
-    } else {
-      interaction.reply('You are not allowed to kick anyone.');
+    const userToKick = guild.members.cache.get(user.id);
+
+    if (!sender.permissions.has('KICK_MEMBERS')) {
+      return interaction.reply('You don\'t have permission to use this command!');
     }
+
+    if (!userToKick.kickable) {
+      return interaction.reply('You can\'t kick this user!');
+    }
+
+    userToKick.kick(reason);
+    interaction.reply('User kicked!');
   }
 };
