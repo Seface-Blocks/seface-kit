@@ -1,4 +1,9 @@
 {
+  "TEXT_CHANNELS_NOT_FOUND": "This guild does not have any text channel.",
+  "VOICE_CHANNELS_NOT_FOUND": "This guild does not have any voice channel.",
+  "STAGE_CHANNELS_NOT_FOUND": "This guild does not have any stage channel.",
+
+
   "CATEGORY_NOT_FOUND": "The category {CATEGORY} is not a category channel or does not exist.",
   "TEXT_CHANNEL_NOT_FOUND": "The channel {CHANNEL} is not a text channel or does not exist.",
   "VOICE_CHANNEL_NOT_FOUND": "The channel {CHANNEL} is not a voice channel or does not exist.",

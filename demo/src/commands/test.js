@@ -1,9 +1,15 @@
 const command = {
-  name: 'ping',
-  description: 'Ping! Pong!',
-  isSlashCommand: false,
-  execute: async (client, message, _args) => {
-    message.channel.send('Pong!');
+  name: 'test',
+  description: 'none',
+  options: [],
+  guilds: ['788243757886996510'],
+  isSlashCommand: true,
+  execute: async (client, interaction, sender, instance) => {
+    const g = await instance.utils.guild.getGuildByName('llgava');
+    const c = await instance.utils.guild.channel.getStageChannels(g);
+
+    console.log(c);
+    interaction.reply(':test_tube: Test command executed!');
   }
 };
 

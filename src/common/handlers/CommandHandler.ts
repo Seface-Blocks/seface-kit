@@ -63,12 +63,16 @@ export class CommandHandler {
 
     if (typeof command.guilds === 'string') {
       await this.slashCommandService.addOnGuild(command.guilds, command, this.slashCommandsCollection);
+      
+      if (!command.permissions) { return; }
       await this.slashCommandService.addPermissionsOnGuild(command.guilds, command);
     }
 
     if (typeof command.guilds === 'object') {
       command.guilds.forEach(async (guildId) => {
         await this.slashCommandService.addOnGuild(guildId, command, this.slashCommandsCollection);
+
+        if(!command.permissions) { return; }
         await this.slashCommandService.addPermissionsOnGuild(guildId, command);
       });
     }
