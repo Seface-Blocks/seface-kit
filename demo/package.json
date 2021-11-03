@@ -1,0 +1,24 @@
+{
+  "name": "seface-kit-demo",
+  "description": "A demo to test Seface Kit package.",
+  "version": "1.0.0",
+  "license": "NONE",
+  "author": "Leonardo Luiz Gava <llgavamt@gmail.com>",
+  "main": "./src/index.js",
+
+  "scripts": {
+    "start": "clear && node .",
+    "dev": "clear && nodemon ."
+  },
+
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "chalk": "^4.1.2",
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0"
+  },
+
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 import { Collection } from 'discord.js';
 import { Event } from '@interfaces/Event';
 import Utils from '@utils/Utils';
@@ -18,12 +18,12 @@ export class EventHandler {
 
   /** Read all events from a specific directory. */
   private readEvents(directory: string): void {
-    const dir = path.join(require.main.path, directory);
+    const dir = path.join(directory);
   
     if (!fs.existsSync(dir)) { return; }
 
     fs.readdirSync(dir).forEach(async (fileOrDir) => {
-      const inEventsDir = path.join(require.main.path, directory, fileOrDir);
+      const inEventsDir = path.join(directory, fileOrDir);
       const subdir = path.join(directory, fileOrDir);
       const stat = fs.lstatSync(inEventsDir);
 

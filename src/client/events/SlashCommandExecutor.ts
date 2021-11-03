@@ -5,7 +5,7 @@
 
 import { Event } from '@interfaces/Event';
 import { Client, CommandInteraction } from 'discord.js';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 
 export const event: Event = {
   name: 'interactionCreate',

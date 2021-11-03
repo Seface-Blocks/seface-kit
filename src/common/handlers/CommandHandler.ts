@@ -1,6 +1,7 @@
 import fs from 'fs';
+import appRoot from 'app-root-path';
 import path from 'path';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 import { Collection } from 'discord.js';
 import { PrefixCommand, SlashCommand } from '@interfaces/Command';
 import Utils from '@utils/Utils';
@@ -33,10 +34,10 @@ export class CommandHandler {
 
   /** Read all command fro a specific directory. */
   private readCommands(directory: string) {
-    const dir = path.join(require.main.path, directory);
+    const dir = path.join(directory);
 
     fs.readdirSync(dir).forEach(async (fileOrDir) => {
-      const inCommandsDir = path.join(require.main.path, directory, fileOrDir);
+      const inCommandsDir = path.join(directory, fileOrDir);
       const subdir = path.join(directory, fileOrDir);
       const dirStat = fs.lstatSync(inCommandsDir);
 
@@ -62,11 +63,13 @@ export class CommandHandler {
 
     if (typeof command.guilds === 'string') {
       await this.slashCommandService.addOnGuild(command.guilds, command, this.slashCommandsCollection);
+      await this.slashCommandService.addPermissionsOnGuild(command.guilds, command);
     }
 
     if (typeof command.guilds === 'object') {
       command.guilds.forEach(async (guildId) => {
         await this.slashCommandService.addOnGuild(guildId, command, this.slashCommandsCollection);
+        await this.slashCommandService.addPermissionsOnGuild(guildId, command);
       });
     }
   }

@@ -3,7 +3,7 @@ import path from 'path';
 import { Collection } from 'discord.js';
 import { Event } from '@interfaces/Event';
 import Utils from '@utils/Utils';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 
 export class ClientHandler {
   private instance: SefaceKit;

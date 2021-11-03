@@ -10,7 +10,7 @@ export class Channel {
       name = name.replace(/\s/g, '_');
       const channel = guild.channels.cache.find(c => c.name === name);
 
-      if (channel.type !== 'GUILD_TEXT') {
+      if (channel.isText()) {
         reject(new Error(Messages.TEXT_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(name))));
       }
 
@@ -22,7 +22,7 @@ export class Channel {
     return new Promise<Discord.TextChannel>((resolve, reject) => {
       const channel = guild.channels.cache.get(id);
 
-      if (channel.type !== 'GUILD_TEXT') {
+      if (channel.isText()) {
         reject(new Error(Messages.TEXT_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(id))));
       }
 
@@ -35,7 +35,7 @@ export class Channel {
     return new Promise<Discord.VoiceChannel>((resolve, reject) => {
       const channel = guild.channels.cache.find(c => c.name === name);
 
-      if (channel.type !== 'GUILD_VOICE') {
+      if (channel.isVoice()) {
         reject(new Error(Messages.VOICE_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(name))));
       }
 
@@ -47,11 +47,36 @@ export class Channel {
     return new Promise<Discord.VoiceChannel>((resolve, reject) => {
       const channel = guild.channels.cache.get(id);
 
-      if (channel.type !== 'GUILD_VOICE') {
+      if (channel.isVoice()) {
         reject(new Error(Messages.VOICE_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(id))));
       }
 
       resolve(channel as Discord.VoiceChannel);
+    });
+  }
+
+  // STAGE CHANNEL
+  public async getStageChannelByName(name: string, guild: Discord.Guild): Promise<Discord.StageChannel> {
+    return new Promise<Discord.StageChannel>((resolve, reject) => {
+      const channel = guild.channels.cache.find(c => c.name === name);
+
+      if (channel.isVoice() && channel.type !== 'GUILD_STAGE_VOICE') {
+        reject(new Error(Messages.STAGE_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(name))));
+      }
+
+      resolve(channel as Discord.StageChannel);
+    });
+  }
+
+  public async getStageChannelById(id: Discord.Snowflake, guild: Discord.Guild): Promise<Discord.StageChannel> {
+    return new Promise<Discord.StageChannel>((resolve, reject) => {
+      const channel = guild.channels.cache.find(c => c.name === id);
+
+      if (channel.isVoice() && channel.type !== 'GUILD_STAGE_VOICE') {
+        reject(new Error(Messages.STAGE_CHANNEL_NOT_FOUND.replace('{CHANNEL}', chalk.yellow(id))));
+      }
+
+      resolve(channel as Discord.StageChannel);
     });
   }
 }

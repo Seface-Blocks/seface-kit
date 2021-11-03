@@ -1,10 +1,10 @@
 import Discord from 'discord.js';
 import chalk from 'chalk';
 import Messages from '@config/messages';
-import { Category } from '@client/Category';
-import { Channel } from '@client/Channel';
-import { Role } from '@client/Role';
-import { Emoji } from '@client/Emoji';
+import { Category } from '@client/discord.js/Category';
+import { Channel } from '@client/discord.js/Channel';
+import { Role } from '@client/discord.js/Role';
+import { Emoji } from '@client/discord.js/Emoji';
 
 export class Guild {
   private client: Discord.Client;

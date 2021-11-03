@@ -1,5 +1,5 @@
 import { Client, CommandInteraction, GuildMember, Message } from 'discord.js';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 
 interface PrefixCommandExecutor {
   (client: Client, message: Message, args: string[]): Promise<void>;
@@ -23,9 +23,16 @@ interface SlashCommandOptions {
   type: number;
 }
 
+interface SlashCommandPermissions {
+  id: string;
+  type: 'USER' | 'ROLE';
+  permission: boolean;
+}
+
 export interface SlashCommand extends CommandBase {
-  options?: SlashCommandOptions[];
   guilds?: string[] | string;
+  options?: SlashCommandOptions[];
+  permissions?: SlashCommandPermissions[];
   execute: SlashCommandExecutor;
 }
 

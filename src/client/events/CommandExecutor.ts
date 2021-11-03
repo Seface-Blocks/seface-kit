@@ -5,7 +5,7 @@
 
 import { Client, Message } from 'discord.js';
 import { Event } from '@interfaces/Event';
-import SefaceKit from '../..';
+import { SefaceKit } from '../..';
 
 export const event: Event = {
   name: 'messageCreate',

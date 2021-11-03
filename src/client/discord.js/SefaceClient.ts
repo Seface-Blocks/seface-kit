@@ -1,5 +1,5 @@
 import Discord from 'discord.js';
-import { Guild } from '@client/Guild';
+import { Guild } from '@client/discord.js/Guild';
 
 export class SefaceClient {
   public guild: Guild;

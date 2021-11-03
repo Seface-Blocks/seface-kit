@@ -6,9 +6,9 @@ import { PrefixCommand, SlashCommand } from '@interfaces/Command';
 import { CommandHandler } from '@handlers/CommandHandler';
 import { EventHandler } from '@handlers/EventHandler';
 import { ClientHandler } from '@handlers/ClientHandler';
-import { SefaceClient } from './client/SefaceClient';
+import { SefaceClient } from '@client/discord.js/SefaceClient';
 
-export default class SefaceKit {
+export class SefaceKit {
   private client: Client;
   private options: SefaceKitOptions;
   private prefixCommands: Collection<string, PrefixCommand> = new Collection();

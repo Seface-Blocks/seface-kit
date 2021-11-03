@@ -35,4 +35,15 @@ export class SlashCommandService {
       );
     } catch (err) { console.error(err); }
   }
+
+  /** Registers the permissions for the current command in a specific server. */
+  public async addPermissionsOnGuild(guildId: string, command: SlashCommand): Promise<void> {
+    const fetchGuildCommands = await this.client.guilds.cache.get(guildId).commands.fetch();
+
+    fetchGuildCommands.forEach(async (c) => {
+      if(c.name === command.name) {
+        await c.permissions.add({ permissions: command.permissions });
+      }
+    });
+  }
 }

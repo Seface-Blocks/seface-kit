@@ -39,7 +39,7 @@ export class Role {
 }
 
 // COMMON
-export default class SefaceKit {
+export class SefaceKit {
   public constructor(client: Discord.Client, options: SefaceKitOptions);
   public get getClient(): Discord.Client;
   public get getOptions(): SefaceKitOptions;
@@ -54,7 +54,8 @@ export default class SefaceKit {
 export class SlashCommandService {
   public constructor(client: Discord.Client);
   public addGlobally(command: SlashCommand, collection: Discord.Collection<string, SlashCommand>): Promise<void>;
-  public addOnGuild(guildId: string, command: SlashCommand, collection: Discord.Collection<string, SlashCommand>): Promise<void>
+  public addOnGuild(guildId: string, command: SlashCommand, collection: Discord.Collection<string, SlashCommand>): Promise<void>;
+  public addPermissionsOnGuild(guildId: string, command: SlashCommand): Promise<void>;
 }
 
 // HANDLERS
@@ -85,7 +86,6 @@ export interface SefaceKitOptions {
   commandsIn: string;
   eventsIn: string;
   prefix: string;
-  showWarns: boolean;
 }
 
 export interface EventExecutor {
@@ -121,9 +121,16 @@ export interface SlashCommandOptions {
   type: number;
 }
 
+export interface SlashCommandPermissions {
+  id: string;
+  type: 'USER' | 'ROLE';
+  permission: boolean;
+}
+
 export interface SlashCommand extends CommandBase {
-  options?: SlashCommandOptions[];
   guilds?: string[] | string;
+  options?: SlashCommandOptions[];
+  permissions?: SlashCommandPermissions[];
   execute: SlashCommandExecutor;
 }
 
