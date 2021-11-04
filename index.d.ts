@@ -98,7 +98,7 @@ export interface Event {
 }
 
 interface PrefixCommandExecutor {
-  (client: Discord.Client, message: Discord.Message, args: string[]): Promise<void>;
+  (client: Discord.Client, message: Discord.Message, args: string[], instance: SefaceKit): Promise<void>;
 }
 
 interface SlashCommandExecutor {
@@ -124,7 +124,7 @@ export interface SlashCommandOptions {
 export interface SlashCommandPermissions {
   id: string;
   type: 'USER' | 'ROLE';
-  permission: boolean;
+  permission?: boolean;
 }
 
 export interface SlashCommand extends CommandBase {

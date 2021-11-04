@@ -13,10 +13,17 @@ const client = new Discord.Client({
 });
 
 client.on('ready', () => {
+  console.clear();
+
   new SefaceKit(client, {
     commandsIn: path.join(__dirname, '/commands'),
     eventsIn: path.join(__dirname, '/events'),
     prefix: '!'
+  });
+
+  client.user.setActivity({
+    type: 'PLAYING',
+    name: 'with seface-kit module'
   });
 
   console.log(`${chalk.bold.green('✓')} The tester bot are online.`);

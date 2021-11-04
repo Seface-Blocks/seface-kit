@@ -2,7 +2,7 @@ import { Client, CommandInteraction, GuildMember, Message } from 'discord.js';
 import { SefaceKit } from '../..';
 
 interface PrefixCommandExecutor {
-  (client: Client, message: Message, args: string[]): Promise<void>;
+  (client: Client, message: Message, args: string[], instance: SefaceKit): Promise<void>;
 }
 
 interface SlashCommandExecutor {

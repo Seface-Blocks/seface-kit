@@ -24,7 +24,7 @@ export const event: Event = {
     const commandCollected = instance.getPrefixCommands.get(command) || instance.getPrefixCommandsAliases.get(command);
 
     if (commandCollected) {
-      commandCollected.execute(client, message, args);
+      commandCollected.execute(client, message, args, instance);
     }
   }
 };
