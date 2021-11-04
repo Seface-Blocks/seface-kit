@@ -1,4 +1,4 @@
-## Seface Kit
+## Seface Kit - ![Downloads](https://img.shields.io/npm/dm/seface-kit?label=Downloads&style=flat-square) ![Version](https://img.shields.io/npm/v/seface-kit?label=Version&style=flat-square)
 ### Um poderoso _Command_ e _Event handler_ para discord.js!
 [English](./../README.md) | Portuguese
 
