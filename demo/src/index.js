@@ -16,8 +16,8 @@ client.on('ready', () => {
   console.clear();
 
   new SefaceKit(client, {
-    commandsIn: path.join(__dirname, '/commands'),
-    eventsIn: path.join(__dirname, '/events'),
+    commandsIn: path.join(__dirname, 'commands'),
+    eventsIn: path.join(__dirname, 'events'),
     prefix: '!'
   });
 

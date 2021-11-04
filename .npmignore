@@ -3,6 +3,7 @@
 **/.vscode/
 **/examples/
 **/src/
+**/demo/
 
 # Files
 **/.*

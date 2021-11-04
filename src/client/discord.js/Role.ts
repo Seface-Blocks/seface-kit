@@ -3,10 +3,10 @@ import chalk from 'chalk';
 import Messages from '@config/messages';
 
 export class Role {
-  
+
   public async getEveryone(guild: Discord.Guild): Promise<Discord.Role> {
     return new Promise((resolve) => {
-      const role = this.getRoleByName('@everyone', guild);
+      const role = guild.roles.everyone;
 
       resolve(role);
     });

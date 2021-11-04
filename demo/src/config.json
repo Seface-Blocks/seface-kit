@@ -1,0 +1,10 @@
+{
+  "GUILD_NAME": "llgava",
+
+  "CATEGORY_NAME": "Interaction",
+  "TEXT_CHANNEL_NAME": "chat",
+  "VOICE_CHANNEL_NAME": "voice",
+  "STAGE_CHANNEL_NAME": "stage",
+
+  "ROLE_NAME": "Developer"
+}

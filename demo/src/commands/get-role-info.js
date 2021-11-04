@@ -3,8 +3,8 @@ const { Client, Message, MessageEmbed } = require('discord.js');
 const { SefaceKit } = require('seface-kit');
 
 const command = {
-  name: 'get-guild-info',
-  description: 'Returns informations about a guild.',
+  name: 'get-role-info',
+  description: 'Returns informations about a role.',
 
   /**
    * It is highly recommended to use TypeScript for better typing.
@@ -15,9 +15,11 @@ const command = {
    */
   execute: async (client, message, args, instance) => {
     const guild = await instance.utils.guild.getGuildByName(Config.GUILD_NAME);
+    const role = await instance.utils.guild.role.getRoleByName(Config.ROLE_NAME, guild);
+
     const embedMessage = new MessageEmbed()
-      .setTitle(guild.name)
-      .setDescription(`This guild has the total of **${guild.memberCount}** members.`)
+      .setTitle(role.name)
+      .setDescription(`This channel are in the guild **${role.guild.name}**.`)
       .addFields(
         { name: 'Creator Website', value: 'https://llgava.net', inline: true },
         { name: 'Creator Twitter', value: '@llgava', inline: true }
