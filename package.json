@@ -1,7 +1,7 @@
 {
   "name": "seface-kit",
   "description": "Seface Kit is a Command and Event Handler for discord.js v13.",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.1-SNAPSHOT",
   "license": "MIT",
   "author": "Leonardo Luiz Gava <llgavamt@gmail.com>",
   "main": "./build/index.js",
